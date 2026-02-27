@@ -1,892 +1,534 @@
+
+My ai · HTML
+Copy
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>My AI</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <style>
+    body { margin: 0; padding: 0; background: #09090b; font-family: Georgia, serif; }
+    #revision-dojo-root { width: 100%; }
+  </style>
 </head>
 <body>
-  <h1>My AI Studio Project</h1>
-  <p>Try out the AI I built below:</p>
-  
-  <!-- PASTE YOUR AI STUDIO CODE RIGHT BELOW THIS LINE -->
-  <a href="https://claude.ai/public/artifacts/219c9cd6-9bfa-48f8-a283-afc1feb37e83">
-  View Artifact
-</a>
-  
-Ib cs 2027 revision dojo · JSX
-Copy
+  <h1 style="color:white; padding: 20px 24px 0; margin:0; font-family: Georgia, serif;">My AI Studio Project</h1>
+  <p style="color:#a1a1aa; padding: 0 24px 12px; margin:0;">Try out the AI I built below:</p>
 
-import { useState, useEffect } from "react";
+  <!-- REVISION DOJO EMBED -->
+  <div id="revision-dojo-root"></div>
 
-const QUESTIONS = [
-  // === SECTION A: MULTIPLE CHOICE ===
-  {
-    id: 1,
-    section: "A",
-    type: "mcq",
-    marks: 1,
-    topic: "Stack – LIFO Principle",
-    difficulty: "Foundation",
-    question: "Which of the following best describes the operating principle of a stack?",
-    options: [
-      "First In, First Out (FIFO)",
-      "Last In, First Out (LIFO)",
-      "Random Access Order",
-      "Highest Priority First",
-    ],
-    answer: 1,
-    explanation:
-      "A stack is a LIFO (Last In, First Out) data structure. The last element pushed onto the stack is the first one to be popped off — like a stack of plates.",
-  },
-  {
-    id: 2,
-    section: "A",
-    type: "mcq",
-    marks: 1,
-    topic: "Queue – FIFO Principle",
-    difficulty: "Foundation",
-    question: "A print spooler processes jobs in the order they arrive. Which data structure is most appropriate?",
-    options: ["Stack", "Queue", "Binary Tree", "Linked List"],
-    answer: 1,
-    explanation:
-      "A Queue follows FIFO (First In, First Out). Print jobs must be processed in the order they were sent — the first job submitted is the first one printed.",
-  },
-  {
-    id: 3,
-    section: "A",
-    type: "mcq",
-    marks: 1,
-    topic: "Stack Operations",
-    difficulty: "Foundation",
-    question: "What error condition occurs when calling pop() on an empty stack?",
-    options: ["Stack overflow", "Index error", "Stack underflow", "Null pointer exception"],
-    answer: 2,
-    explanation:
-      "Stack underflow occurs when you attempt to pop from an empty stack — there is nothing to remove. Stack overflow is the opposite: pushing onto a full stack.",
-  },
-  {
-    id: 4,
-    section: "A",
-    type: "mcq",
-    marks: 1,
-    topic: "Queue Operations",
-    difficulty: "Foundation",
-    question: "In a queue, items are added at the _______ and removed from the _______.",
-    options: [
-      "front … rear",
-      "rear … rear",
-      "rear … front",
-      "front … front",
-    ],
-    answer: 2,
-    explanation:
-      "In a queue, items are enqueued (added) at the rear and dequeued (removed) from the front — just like a real-world queue of people.",
-  },
-  {
-    id: 5,
-    section: "A",
-    type: "mcq",
-    marks: 1,
-    topic: "Static vs Dynamic",
-    difficulty: "Standard",
-    question: "Which statement correctly distinguishes a static stack from a dynamic stack?",
-    options: [
-      "A static stack uses a linked list; a dynamic stack uses an array",
-      "A static stack has a fixed maximum size; a dynamic stack can grow as needed",
-      "A static stack is faster to dequeue; a dynamic stack is faster to enqueue",
-      "A static stack is only used in HL; a dynamic stack is only used in SL",
-    ],
-    answer: 1,
-    explanation:
-      "A static stack is implemented with a fixed-size array and has a maximum capacity. A dynamic stack (often using a linked list or Python list) can grow as new elements are added.",
-  },
-  {
-    id: 6,
-    section: "A",
-    type: "mcq",
-    marks: 1,
-    topic: "peek() / top()",
-    difficulty: "Standard",
-    question: "What does the peek() (or top()) method return?",
-    options: [
-      "The bottom element and removes it",
-      "The top element and removes it",
-      "The top element without removing it",
-      "The number of elements in the stack",
-    ],
-    answer: 2,
-    explanation:
-      "peek() / top() is a non-destructive operation — it returns the top element for inspection without modifying the stack. pop() would return AND remove it.",
-  },
-  {
-    id: 7,
-    section: "A",
-    type: "mcq",
-    marks: 1,
-    topic: "Real-World Applications",
-    difficulty: "Standard",
-    question: "The 'Undo' function in a text editor is best modelled by which data structure?",
-    options: ["Queue", "Stack", "Circular Buffer", "Hash Table"],
-    answer: 1,
-    explanation:
-      "Undo uses a stack. Each action is pushed onto the stack. When the user presses Undo, the most recent action is popped off (LIFO). This ensures the last action done is the first one undone.",
-  },
-  {
-    id: 8,
-    section: "A",
-    type: "mcq",
-    marks: 1,
-    topic: "pop(0) Efficiency",
-    difficulty: "Higher",
-    question: "Why is using pop(0) on a Python list inefficient for implementing a large queue?",
-    options: [
-      "pop(0) cannot be used on lists",
-      "It raises an IndexError on empty lists",
-      "It requires shifting all remaining elements forward, making it O(n)",
-      "It removes from the wrong end of the list",
-    ],
-    answer: 2,
-    explanation:
-      "pop(0) removes from index 0 (the front), but Python lists store elements contiguously in memory. Every remaining element must shift one position left — an O(n) operation. Using collections.deque avoids this with O(1) popleft().",
-  },
+  <script type="text/babel">
+    const { useState } = React;
 
-  // === SECTION B: TRACE TABLE ===
-  {
-    id: 9,
-    section: "B",
-    type: "trace",
-    marks: 4,
-    topic: "Stack Trace",
-    difficulty: "Standard",
-    question:
-      "A stack S is initially empty (capacity = 5). The following operations are performed in order:\n\npush(3)  →  push(7)  →  push(1)  →  pop()  →  peek()  →  push(9)\n\nComplete the trace table below. Select the correct final stack state (bottom → top).",
-    traceSteps: [
-      { op: "push(3)", returned: "—", stack: "[3]" },
-      { op: "push(7)", returned: "—", stack: "[3, 7]" },
-      { op: "push(1)", returned: "—", stack: "[3, 7, 1]" },
-      { op: "pop()", returned: "1", stack: "[3, 7]" },
-      { op: "peek()", returned: "7", stack: "[3, 7]" },
-      { op: "push(9)", returned: "—", stack: "[3, 7, 9]" },
-    ],
-    options: [
-      "[3, 7, 9]  — top is 9",
-      "[3, 7, 1, 9]  — top is 9",
-      "[9, 7, 3]  — top is 3",
-      "[7, 9]  — top is 9",
-    ],
-    answer: 0,
-    explanation:
-      "After push(3), push(7), push(1): stack = [3,7,1]. pop() removes 1 → [3,7]. peek() reads 7 (no change). push(9) → [3,7,9]. Final stack bottom→top: [3, 7, 9], top is 9.",
-  },
-  {
-    id: 10,
-    section: "B",
-    type: "trace",
-    marks: 4,
-    topic: "Queue Trace",
-    difficulty: "Standard",
-    question:
-      "A queue Q is initially empty. The following operations are performed:\n\nenqueue('A')  →  enqueue('B')  →  enqueue('C')  →  dequeue()  →  enqueue('D')  →  dequeue()\n\nWhat is the final state of the queue (front → rear) after all operations?",
-    traceSteps: [
-      { op: "enqueue('A')", returned: "—", queue: "['A']" },
-      { op: "enqueue('B')", returned: "—", queue: "['A','B']" },
-      { op: "enqueue('C')", returned: "—", queue: "['A','B','C']" },
-      { op: "dequeue()", returned: "'A'", queue: "['B','C']" },
-      { op: "enqueue('D')", returned: "—", queue: "['B','C','D']" },
-      { op: "dequeue()", returned: "'B'", queue: "['C','D']" },
-    ],
-    options: [
-      "['A', 'B']  — front is A",
-      "['C', 'D']  — front is C",
-      "['B', 'C', 'D']  — front is B",
-      "['D']  — front is D",
-    ],
-    answer: 1,
-    explanation:
-      "Enqueue A,B,C → ['A','B','C']. dequeue() removes A → ['B','C']. enqueue D → ['B','C','D']. dequeue() removes B → ['C','D']. Final queue front→rear: ['C','D'].",
-  },
+    const QUESTIONS = [
+      {
+        id: 1, section: "A", marks: 1, topic: "Stack – LIFO Principle", difficulty: "Foundation",
+        question: "Which of the following best describes the operating principle of a stack?",
+        options: ["First In, First Out (FIFO)", "Last In, First Out (LIFO)", "Random Access Order", "Highest Priority First"],
+        answer: 1,
+        explanation: "A stack is a LIFO (Last In, First Out) data structure. The last element pushed onto the stack is the first one to be popped off — like a stack of plates.",
+      },
+      {
+        id: 2, section: "A", marks: 1, topic: "Queue – FIFO Principle", difficulty: "Foundation",
+        question: "A print spooler processes jobs in the order they arrive. Which data structure is most appropriate?",
+        options: ["Stack", "Queue", "Binary Tree", "Linked List"],
+        answer: 1,
+        explanation: "A Queue follows FIFO (First In, First Out). Print jobs must be processed in the order they were sent — the first job submitted is the first one printed.",
+      },
+      {
+        id: 3, section: "A", marks: 1, topic: "Stack Operations", difficulty: "Foundation",
+        question: "What error condition occurs when calling pop() on an empty stack?",
+        options: ["Stack overflow", "Index error", "Stack underflow", "Null pointer exception"],
+        answer: 2,
+        explanation: "Stack underflow occurs when you attempt to pop from an empty stack — there is nothing to remove. Stack overflow is the opposite: pushing onto a full stack.",
+      },
+      {
+        id: 4, section: "A", marks: 1, topic: "Queue Operations", difficulty: "Foundation",
+        question: "In a queue, items are added at the _______ and removed from the _______.",
+        options: ["front … rear", "rear … rear", "rear … front", "front … front"],
+        answer: 2,
+        explanation: "In a queue, items are enqueued (added) at the rear and dequeued (removed) from the front — just like a real-world queue of people.",
+      },
+      {
+        id: 5, section: "A", marks: 1, topic: "Static vs Dynamic", difficulty: "Standard",
+        question: "Which statement correctly distinguishes a static stack from a dynamic stack?",
+        options: [
+          "A static stack uses a linked list; a dynamic stack uses an array",
+          "A static stack has a fixed maximum size; a dynamic stack can grow as needed",
+          "A static stack is faster to dequeue; a dynamic stack is faster to enqueue",
+          "A static stack is only used in HL; a dynamic stack is only used in SL",
+        ],
+        answer: 1,
+        explanation: "A static stack is implemented with a fixed-size array and has a maximum capacity. A dynamic stack (often using a linked list or Python list) can grow as new elements are added.",
+      },
+      {
+        id: 6, section: "A", marks: 1, topic: "peek() / top()", difficulty: "Standard",
+        question: "What does the peek() (or top()) method return?",
+        options: ["The bottom element and removes it", "The top element and removes it", "The top element without removing it", "The number of elements in the stack"],
+        answer: 2,
+        explanation: "peek() / top() is a non-destructive operation — it returns the top element for inspection without modifying the stack. pop() would return AND remove it.",
+      },
+      {
+        id: 7, section: "A", marks: 1, topic: "Real-World Applications", difficulty: "Standard",
+        question: "The 'Undo' function in a text editor is best modelled by which data structure?",
+        options: ["Queue", "Stack", "Circular Buffer", "Hash Table"],
+        answer: 1,
+        explanation: "Undo uses a stack. Each action is pushed onto the stack. When the user presses Undo, the most recent action is popped off (LIFO). This ensures the last action done is the first one undone.",
+      },
+      {
+        id: 8, section: "A", marks: 1, topic: "pop(0) Efficiency", difficulty: "Higher",
+        question: "Why is using pop(0) on a Python list inefficient for implementing a large queue?",
+        options: [
+          "pop(0) cannot be used on lists",
+          "It raises an IndexError on empty lists",
+          "It requires shifting all remaining elements forward, making it O(n)",
+          "It removes from the wrong end of the list",
+        ],
+        answer: 2,
+        explanation: "pop(0) removes from index 0 (the front), but Python lists store elements contiguously in memory. Every remaining element must shift one position left — an O(n) operation. Using collections.deque avoids this with O(1) popleft().",
+      },
+      {
+        id: 9, section: "B", marks: 4, topic: "Stack Trace", difficulty: "Standard",
+        question: "A stack S is initially empty (capacity = 5). The following operations are performed in order:\n\npush(3)  →  push(7)  →  push(1)  →  pop()  →  peek()  →  push(9)\n\nComplete the trace table below. Select the correct final stack state (bottom → top).",
+        traceSteps: [
+          { op: "push(3)", returned: "—", stack: "[3]" },
+          { op: "push(7)", returned: "—", stack: "[3, 7]" },
+          { op: "push(1)", returned: "—", stack: "[3, 7, 1]" },
+          { op: "pop()", returned: "1", stack: "[3, 7]" },
+          { op: "peek()", returned: "7", stack: "[3, 7]" },
+          { op: "push(9)", returned: "—", stack: "[3, 7, 9]" },
+        ],
+        options: ["[3, 7, 9]  — top is 9", "[3, 7, 1, 9]  — top is 9", "[9, 7, 3]  — top is 3", "[7, 9]  — top is 9"],
+        answer: 0,
+        explanation: "After push(3), push(7), push(1): stack = [3,7,1]. pop() removes 1 → [3,7]. peek() reads 7 (no change). push(9) → [3,7,9]. Final stack bottom→top: [3, 7, 9], top is 9.",
+      },
+      {
+        id: 10, section: "B", marks: 4, topic: "Queue Trace", difficulty: "Standard",
+        question: "A queue Q is initially empty. The following operations are performed:\n\nenqueue('A')  →  enqueue('B')  →  enqueue('C')  →  dequeue()  →  enqueue('D')  →  dequeue()\n\nWhat is the final state of the queue (front → rear) after all operations?",
+        traceSteps: [
+          { op: "enqueue('A')", returned: "—", queue: "['A']" },
+          { op: "enqueue('B')", returned: "—", queue: "['A','B']" },
+          { op: "enqueue('C')", returned: "—", queue: "['A','B','C']" },
+          { op: "dequeue()", returned: "'A'", queue: "['B','C']" },
+          { op: "enqueue('D')", returned: "—", queue: "['B','C','D']" },
+          { op: "dequeue()", returned: "'B'", queue: "['C','D']" },
+        ],
+        options: ["['A', 'B']  — front is A", "['C', 'D']  — front is C", "['B', 'C', 'D']  — front is B", "['D']  — front is D"],
+        answer: 1,
+        explanation: "Enqueue A,B,C → ['A','B','C']. dequeue() removes A → ['B','C']. enqueue D → ['B','C','D']. dequeue() removes B → ['C','D']. Final queue front→rear: ['C','D'].",
+      },
+      {
+        id: 11, section: "C", marks: 3, topic: "Stack Class – is_full()", difficulty: "Standard",
+        question: "Study the Stack class below. Which implementation of is_full() is correct?",
+        code: `class Stack:\n    def __init__(self, size):\n        self.size = size\n        self.stack = [None] * size\n        self.top = -1\n\n    def is_full(self):\n        # Which option correctly implements this?\n        pass`,
+        options: ["return self.top == self.size", "return self.top == self.size - 1", "return self.top == 0", "return len(self.stack) == 0"],
+        answer: 1,
+        explanation: "top is an index starting at -1 (empty). After pushing 'size' elements, top reaches size-1. So is_full() should return True when self.top == self.size - 1.",
+      },
+      {
+        id: 12, section: "C", marks: 3, topic: "Stack Class – push()", difficulty: "Standard",
+        question: "Complete the push() method. Which option correctly increments the pointer AND inserts the value?",
+        code: `def push(self, value):\n    if self.is_full():\n        print("Stack overflow")\n    else:\n        # Insert here:\n        pass`,
+        options: [
+          "self.stack[self.top] = value\nself.top += 1",
+          "self.top += 1\nself.stack[self.top] = value",
+          "self.stack.append(value)",
+          "self.top -= 1\nself.stack[self.top] = value",
+        ],
+        answer: 1,
+        explanation: "You must increment top FIRST (from -1 to 0 on first push), then assign the value at that new index. The order matters — otherwise you'd write to index -1 (the last element!).",
+      },
+      {
+        id: 13, section: "C", marks: 3, topic: "Stack Class – pop()", difficulty: "Standard",
+        question: "Which pop() implementation correctly returns the top value and decrements the pointer?",
+        code: `def pop(self):\n    if self.is_empty():\n        print("Stack underflow")\n        return None\n    else:\n        # Which is correct?\n        pass`,
+        options: [
+          "self.top -= 1\nreturn self.stack[self.top]",
+          "value = self.stack[self.top]\nself.top -= 1\nreturn value",
+          "return self.stack.pop()",
+          "return self.stack[0]\nself.top -= 1",
+        ],
+        answer: 1,
+        explanation: "Save the value at top FIRST, then decrement top, then return the saved value. Option A decrements first then returns the wrong element. Option C uses the built-in which bypasses the class logic.",
+      },
+      {
+        id: 14, section: "C", marks: 3, topic: "Queue – enqueue/dequeue", difficulty: "Standard",
+        question: "A Queue class uses a Python list. Which pair of methods correctly implements enqueue and dequeue?",
+        code: `class Queue:\n    def __init__(self):\n        self.queue = []`,
+        options: [
+          "enqueue: self.queue.insert(0, item)\ndequeue: return self.queue.pop()",
+          "enqueue: self.queue.append(item)\ndequeue: return self.queue.pop(0)",
+          "enqueue: self.queue.append(item)\ndequeue: return self.queue.pop()",
+          "enqueue: self.queue.pop(0)\ndequeue: return self.queue.append(item)",
+        ],
+        answer: 1,
+        explanation: "append() adds to the rear (correct for enqueue). pop(0) removes from the front (correct for dequeue, maintaining FIFO). Option C would make it LIFO (a stack), not a queue.",
+      },
+      {
+        id: 15, section: "D", marks: 4, topic: "String Reversal with Stack", difficulty: "Standard",
+        question: 'Which of the following pseudocode algorithms correctly uses a Stack to reverse the string "CODE"?\n\nNote: A stack s with push(), pop(), isEmpty() is available.',
+        options: [
+          's = Stack(10)\nfor each char in "CODE":\n    s.push(char)\nresult = ""\nwhile not s.isEmpty():\n    result = result + s.pop()\noutput result',
+          's = Stack(10)\nfor each char in "CODE":\n    s.push(char)\nresult = ""\nwhile not s.isEmpty():\n    result = s.pop() + result\noutput result',
+          's = Stack(10)\nfor each char in "CODE":\n    s.pop()\nresult = ""\nwhile not s.isEmpty():\n    result = result + s.push(char)\noutput result',
+          'result = ""\nfor each char in "CODE":\n    result = char + result\noutput result  # No stack needed',
+        ],
+        answer: 0,
+        explanation: 'Push each character: C, O, D, E. Pop order is LIFO: E, D, O, C. Building result by appending each pop gives "EDOC". Option A is correct. (Option D also reverses but does not use a stack — this would not earn marks in an IB question specifying stack use.)',
+      },
+      {
+        id: 16, section: "D", marks: 4, topic: "Air Traffic Control Queue", difficulty: "Higher",
+        question: "An air traffic control system uses a Queue to manage planes waiting to land. Study the pseudocode and identify the bug:",
+        code: `ATC = Queue()\nATC.enqueue("Flight BA101")\nATC.enqueue("Flight EK202")\nATC.enqueue("Flight LH303")\n\nloop while not ATC.isEmpty()\n    plane = ATC.dequeue()\n    output plane + " cleared for landing"\n    ATC.enqueue(plane)   // <- Line X\nend loop`,
+        options: [
+          "There is no bug — the algorithm is correct",
+          "Line X creates an infinite loop by re-adding each plane after landing",
+          "dequeue() should be enqueue() and vice versa",
+          "The loop condition should be ATC.isFull()",
+        ],
+        answer: 1,
+        explanation: "Line X re-enqueues every plane after it lands, so the queue never empties. The loop runs forever. The fix is to remove Line X entirely so planes leave the queue permanently after landing.",
+      },
+      {
+        id: 17, section: "D", marks: 4, topic: "Non-Destructive Stack Traversal", difficulty: "Higher",
+        question: "A stack IBGrades holds exam scores. You must COUNT scores between 24 and 30 inclusive WITHOUT permanently destroying the stack. Which approach is correct?",
+        options: [
+          "Loop while not empty, pop each grade and count if in range — the stack is restored automatically",
+          "Use a temporary second stack: pop each grade into it (counting as needed), then pop the temp stack back to restore IBGrades",
+          "Use peek() repeatedly in a loop to access each element",
+          "Convert the stack to a list using list(IBGrades) then iterate",
+        ],
+        answer: 1,
+        explanation: "The standard non-destructive technique: pop each element into a temporary stack (counting if in range). Then pop the temp stack back into the original. This restores the original order. peek() only sees the top element, so it cannot traverse alone.",
+      },
+      {
+        id: 18, section: "D", marks: 3, topic: "Circular Queue Concept", difficulty: "Higher",
+        question: "Why might a circular queue be preferred over a linear (static) queue in some implementations?",
+        options: [
+          "A circular queue stores more elements for the same array size",
+          "A circular queue reuses empty space at the front of the array after dequeues, avoiding wasted memory",
+          "A circular queue automatically resizes when full",
+          "A circular queue supports both FIFO and LIFO operations simultaneously",
+        ],
+        answer: 1,
+        explanation: "In a linear static queue, dequeued slots at the front cannot be reused — the rear pointer only moves forward. A circular queue wraps rear back to index 0 when it reaches the end, reusing freed slots. This avoids the 'false full' problem without shifting elements.",
+      },
+      {
+        id: 19, section: "E", marks: 6, topic: "Comparing Stack and Queue", difficulty: "Higher",
+        question: "A developer needs to build a 'browser history' feature (Back button) AND a 'task scheduler' that runs jobs in submission order. Evaluate which data structure is appropriate for each scenario and justify your answer with reference to the operations required.",
+        options: [
+          "Both should use a Queue — FIFO ensures predictable order for both cases",
+          "Browser history → Stack (LIFO; most recent page is accessed first with Back). Task scheduler → Queue (FIFO; tasks run in submission order). Each structure matches the access pattern of its use case.",
+          "Browser history → Queue (pages visited in order). Task scheduler → Stack (most urgent task first).",
+          "Both should use a Stack — it is more memory-efficient than a Queue",
+        ],
+        answer: 1,
+        explanation: "Browser history uses a Stack: pressing Back should return to the most recently visited page (LIFO). Each navigation pushes a URL; Back pops it. Task scheduler uses a Queue: jobs must execute in the order submitted (FIFO). Enqueue on submission, dequeue when the processor is free.",
+      },
+      {
+        id: 20, section: "E", marks: 6, topic: "OOP Stack Design", difficulty: "Higher",
+        question: "A student writes the following class. Identify TWO design problems and select the response that correctly names them both:",
+        code: `class Stack:\n    def __init__(self):\n        self.data = []\n        self.MAX = 5\n\n    def push(self, val):\n        self.data.append(val)   # No overflow check\n\n    def pop(self):\n        return self.data.pop(0)  # Wrong end + no underflow check`,
+        options: [
+          "1) No overflow check in push(). 2) pop() removes from index 0 (the wrong end — should be the top, i.e. last element). Also missing underflow check.",
+          "1) The class name should be 'ADTStack'. 2) data should be a tuple, not a list.",
+          "1) __init__ should have a size parameter. 2) MAX should be a class variable.",
+          "There are no design problems — this is a valid stack implementation.",
+        ],
+        answer: 0,
+        explanation: "Two bugs: (1) push() never checks is_full() — elements can be added beyond MAX. (2) pop() uses pop(0) which removes from the FRONT (queue behaviour), not the top. It should be pop() or pop(-1) to remove the last element. Also, no underflow guard before pop().",
+      },
+    ];
 
-  // === SECTION C: CODE ANALYSIS (Python) ===
-  {
-    id: 11,
-    section: "C",
-    type: "code",
-    marks: 3,
-    topic: "Stack Class – is_full()",
-    difficulty: "Standard",
-    question:
-      "Study the Stack class below. Which implementation of is_full() is correct?",
-    code: `class Stack:
-    def __init__(self, size):
-        self.size = size
-        self.stack = [None] * size
-        self.top = -1
+    const SECTION_META = {
+      A: { label: "Section A — Multiple Choice", color: "#4ade80", bg: "#052e16", icon: "◉" },
+      B: { label: "Section B — Trace Tables",    color: "#60a5fa", bg: "#0c1a2e", icon: "⊟" },
+      C: { label: "Section C — Code Analysis",   color: "#f59e0b", bg: "#1c0f02", icon: "⌨" },
+      D: { label: "Section D — Algorithm Design", color: "#c084fc", bg: "#1a0a2e", icon: "⊕" },
+      E: { label: "Section E — Extended Response", color: "#f87171", bg: "#1c0505", icon: "✦" },
+    };
 
-    def is_full(self):
-        # Which option correctly implements this?
-        pass`,
-    options: [
-      "return self.top == self.size",
-      "return self.top == self.size - 1",
-      "return self.top == 0",
-      "return len(self.stack) == 0",
-    ],
-    answer: 1,
-    explanation:
-      "top is an index starting at -1 (empty). After pushing 'size' elements, top reaches size-1. So is_full() should return True when self.top == self.size - 1.",
-  },
-  {
-    id: 12,
-    section: "C",
-    type: "code",
-    marks: 3,
-    topic: "Stack Class – push()",
-    difficulty: "Standard",
-    question:
-      "Complete the push() method. Which option correctly increments the pointer AND inserts the value?",
-    code: `def push(self, value):
-    if self.is_full():
-        print("Stack overflow")
-    else:
-        # Insert here:
-        pass`,
-    options: [
-      "self.stack[self.top] = value\nself.top += 1",
-      "self.top += 1\nself.stack[self.top] = value",
-      "self.stack.append(value)",
-      "self.top -= 1\nself.stack[self.top] = value",
-    ],
-    answer: 1,
-    explanation:
-      "You must increment top FIRST (from -1 to 0 on first push), then assign the value at that new index. The order matters — otherwise you'd write to index -1 (the last element!).",
-  },
-  {
-    id: 13,
-    section: "C",
-    type: "code",
-    marks: 3,
-    topic: "Stack Class – pop()",
-    difficulty: "Standard",
-    question: "Which pop() implementation correctly returns the top value and decrements the pointer?",
-    code: `def pop(self):
-    if self.is_empty():
-        print("Stack underflow")
-        return None
-    else:
-        # Which is correct?
-        pass`,
-    options: [
-      "self.top -= 1\nreturn self.stack[self.top]",
-      "value = self.stack[self.top]\nself.top -= 1\nreturn value",
-      "return self.stack.pop()",
-      "return self.stack[0]\nself.top -= 1",
-    ],
-    answer: 1,
-    explanation:
-      "Save the value at top FIRST, then decrement top, then return the saved value. Option A decrements first then returns the wrong element. Option C uses the built-in which bypasses the class logic.",
-  },
-  {
-    id: 14,
-    section: "C",
-    type: "code",
-    marks: 3,
-    topic: "Queue – enqueue/dequeue",
-    difficulty: "Standard",
-    question: "A Queue class uses a Python list. Which pair of methods correctly implements enqueue and dequeue?",
-    code: `class Queue:
-    def __init__(self):
-        self.queue = []`,
-    options: [
-      "enqueue: self.queue.insert(0, item)\ndequeue: return self.queue.pop()",
-      "enqueue: self.queue.append(item)\ndequeue: return self.queue.pop(0)",
-      "enqueue: self.queue.append(item)\ndequeue: return self.queue.pop()",
-      "enqueue: self.queue.pop(0)\ndequeue: return self.queue.append(item)",
-    ],
-    answer: 1,
-    explanation:
-      "append() adds to the rear (correct for enqueue). pop(0) removes from the front (correct for dequeue, maintaining FIFO). Option C would make it LIFO (a stack), not a queue.",
-  },
+    const DIFF_COLOR = { Foundation: "#4ade80", Standard: "#f59e0b", Higher: "#f87171" };
 
-  // === SECTION D: SHORT ANSWER / ALGORITHM ===
-  {
-    id: 15,
-    section: "D",
-    type: "short",
-    marks: 4,
-    topic: "String Reversal with Stack",
-    difficulty: "Standard",
-    question:
-      'Which of the following pseudocode algorithms correctly uses a Stack to reverse the string "CODE"?\n\nNote: A stack s with push(), pop(), isEmpty() is available.',
-    options: [
-      `s = Stack(10)\nfor each char in "CODE":\n    s.push(char)\nresult = ""\nwhile not s.isEmpty():\n    result = result + s.pop()\noutput result`,
-      `s = Stack(10)\nfor each char in "CODE":\n    s.push(char)\nresult = ""\nwhile not s.isEmpty():\n    result = s.pop() + result\noutput result`,
-      `s = Stack(10)\nfor each char in "CODE":\n    s.pop()\nresult = ""\nwhile not s.isEmpty():\n    result = result + s.push(char)\noutput result`,
-      `result = ""\nfor each char in "CODE":\n    result = char + result\noutput result  # No stack needed`,
-    ],
-    answer: 0,
-    explanation:
-      'Push each character: C, O, D, E. Pop order is LIFO: E, D, O, C. Building result by appending each pop gives "EDOC". Option A is correct. (Option D also reverses but does not use a stack — this would not earn marks in an IB question specifying stack use.)',
-  },
-  {
-    id: 16,
-    section: "D",
-    type: "short",
-    marks: 4,
-    topic: "Air Traffic Control Queue",
-    difficulty: "Higher",
-    question:
-      "An air traffic control system uses a Queue to manage planes waiting to land. Study the pseudocode and identify the bug:",
-    code: `ATC = Queue()
-ATC.enqueue("Flight BA101")
-ATC.enqueue("Flight EK202")
-ATC.enqueue("Flight LH303")
+    function RevisionDojo() {
+      const [currentQ, setCurrentQ] = useState(0);
+      const [selected, setSelected] = useState(null);
+      const [confirmed, setConfirmed] = useState(false);
+      const [results, setResults] = useState({});
+      const [showExplanation, setShowExplanation] = useState(false);
+      const [mode, setMode] = useState("exam");
+      const [filter, setFilter] = useState("ALL");
+      const [animKey, setAnimKey] = useState(0);
 
-loop while not ATC.isEmpty()
-    plane = ATC.dequeue()
-    output plane + " cleared for landing"
-    ATC.enqueue(plane)   // ← Line X
-end loop`,
-    options: [
-      "There is no bug — the algorithm is correct",
-      "Line X creates an infinite loop by re-adding each plane after landing",
-      "dequeue() should be enqueue() and vice versa",
-      "The loop condition should be ATC.isFull()",
-    ],
-    answer: 1,
-    explanation:
-      "Line X re-enqueues every plane after it lands, so the queue never empties. The loop runs forever. The fix is to remove Line X entirely so planes leave the queue permanently after landing.",
-  },
-  {
-    id: 17,
-    section: "D",
-    type: "short",
-    marks: 4,
-    topic: "Non-Destructive Stack Traversal",
-    difficulty: "Higher",
-    question:
-      "A stack IBGrades holds exam scores. You must COUNT scores between 24 and 30 inclusive WITHOUT permanently destroying the stack. Which approach is correct?",
-    options: [
-      "Loop while not empty, pop each grade and count if in range — the stack is restored automatically",
-      "Use a temporary second stack: pop each grade into it (counting as needed), then pop the temp stack back to restore IBGrades",
-      "Use peek() repeatedly in a loop to access each element",
-      "Convert the stack to a list using list(IBGrades) then iterate",
-    ],
-    answer: 1,
-    explanation:
-      "The standard non-destructive technique: pop each element into a temporary stack (counting if in range). Then pop the temp stack back into the original. This restores the original order. peek() only sees the top element, so it cannot traverse alone.",
-  },
-  {
-    id: 18,
-    section: "D",
-    type: "short",
-    marks: 3,
-    topic: "Circular Queue Concept",
-    difficulty: "Higher",
-    question:
-      "Why might a circular queue be preferred over a linear (static) queue in some implementations?",
-    options: [
-      "A circular queue stores more elements for the same array size",
-      "A circular queue reuses empty space at the front of the array after dequeues, avoiding wasted memory",
-      "A circular queue automatically resizes when full",
-      "A circular queue supports both FIFO and LIFO operations simultaneously",
-    ],
-    answer: 1,
-    explanation:
-      "In a linear static queue, dequeued slots at the front cannot be reused — the rear pointer only moves forward. A circular queue wraps rear back to index 0 when it reaches the end, reusing freed slots. This avoids the 'false full' problem without shifting elements.",
-  },
+      const filteredQs = filter === "ALL" ? QUESTIONS : QUESTIONS.filter(q => q.section === filter);
+      const q = filteredQs[currentQ];
 
-  // === SECTION E: EXTENDED RESPONSE ===
-  {
-    id: 19,
-    section: "E",
-    type: "extended",
-    marks: 6,
-    topic: "Comparing Stack and Queue",
-    difficulty: "Higher",
-    question:
-      "A developer needs to build a 'browser history' feature (Back button) AND a 'task scheduler' that runs jobs in submission order. Evaluate which data structure is appropriate for each scenario and justify your answer with reference to the operations required.",
-    options: [
-      "Both should use a Queue — FIFO ensures predictable order for both cases",
-      "Browser history → Stack (LIFO; most recent page is accessed first with Back). Task scheduler → Queue (FIFO; tasks run in submission order). Each structure matches the access pattern of its use case.",
-      "Browser history → Queue (pages visited in order). Task scheduler → Stack (most urgent task first).",
-      "Both should use a Stack — it is more memory-efficient than a Queue",
-    ],
-    answer: 1,
-    explanation:
-      "Browser history uses a Stack: pressing Back should return to the most recently visited page (LIFO). Each navigation pushes a URL; Back pops it. Task scheduler uses a Queue: jobs must execute in the order submitted (FIFO). Enqueue on submission, dequeue when the processor is free. This question tests your ability to match the ADT to the access pattern — a core IB exam skill.",
-  },
-  {
-    id: 20,
-    section: "E",
-    type: "extended",
-    marks: 6,
-    topic: "OOP Stack Design",
-    difficulty: "Higher",
-    question:
-      "A student writes the following class. Identify TWO design problems and select the response that correctly names them both:",
-    code: `class Stack:
-    def __init__(self):
-        self.data = []
-        self.MAX = 5
+      const totalMarks = QUESTIONS.reduce((s, q) => s + q.marks, 0);
+      const earnedMarks = Object.entries(results).reduce((s, [id, r]) => {
+        const question = QUESTIONS.find(q => q.id === parseInt(id));
+        return s + (r.correct ? question.marks : 0);
+      }, 0);
 
-    def push(self, val):
-        self.data.append(val)   # No overflow check
+      function handleConfirm() {
+        if (selected === null) return;
+        const correct = selected === q.answer;
+        setResults(prev => ({ ...prev, [q.id]: { correct, selected } }));
+        setConfirmed(true);
+        setShowExplanation(true);
+      }
 
-    def pop(self):
-        return self.data.pop(0)  # Wrong end + no underflow check`,
-    options: [
-      "1) No overflow check in push(). 2) pop() removes from index 0 (the wrong end — should be the top, i.e. last element). Also missing underflow check.",
-      "1) The class name should be 'ADTStack'. 2) data should be a tuple, not a list.",
-      "1) __init__ should have a size parameter. 2) MAX should be a class variable.",
-      "There are no design problems — this is a valid stack implementation.",
-    ],
-    answer: 0,
-    explanation:
-      "Two bugs: (1) push() never checks is_full() — elements can be added beyond MAX. (2) pop() uses pop(0) which removes from the FRONT (queue behaviour), not the top. It should be pop() or pop(-1) to remove the last element. Also, no underflow guard before pop().",
-  },
-];
+      function handleNext() {
+        if (currentQ < filteredQs.length - 1) {
+          setCurrentQ(c => c + 1);
+          setSelected(null);
+          setConfirmed(false);
+          setShowExplanation(false);
+          setAnimKey(k => k + 1);
+        } else {
+          setMode("score");
+        }
+      }
 
-const SECTION_META = {
-  A: { label: "Section A — Multiple Choice", color: "#4ade80", bg: "#052e16", icon: "◉" },
-  B: { label: "Section B — Trace Tables", color: "#60a5fa", bg: "#0c1a2e", icon: "⊟" },
-  C: { label: "Section C — Code Analysis", color: "#f59e0b", bg: "#1c0f02", icon: "⌨" },
-  D: { label: "Section D — Algorithm Design", color: "#c084fc", bg: "#1a0a2e", icon: "⊕" },
-  E: { label: "Section E — Extended Response", color: "#f87171", bg: "#1c0505", icon: "✦" },
-};
+      function handleRestart() {
+        setCurrentQ(0); setSelected(null); setConfirmed(false);
+        setShowExplanation(false); setResults({}); setMode("exam"); setAnimKey(k => k + 1);
+      }
 
-const DIFF_COLOR = { Foundation: "#4ade80", Standard: "#f59e0b", Higher: "#f87171" };
+      function jumpTo(idx) {
+        setCurrentQ(idx);
+        setSelected(results[filteredQs[idx]?.id]?.selected ?? null);
+        setConfirmed(!!results[filteredQs[idx]?.id]);
+        setShowExplanation(!!results[filteredQs[idx]?.id]);
+        setMode("exam"); setAnimKey(k => k + 1);
+      }
 
-export default function RevisionDojo() {
-  const [currentQ, setCurrentQ] = useState(0);
-  const [selected, setSelected] = useState(null);
-  const [confirmed, setConfirmed] = useState(false);
-  const [results, setResults] = useState({}); // {questionId: {correct, selected}}
-  const [showExplanation, setShowExplanation] = useState(false);
-  const [mode, setMode] = useState("exam"); // 'exam' | 'review' | 'score'
-  const [filter, setFilter] = useState("ALL");
-  const [animKey, setAnimKey] = useState(0);
+      const pct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
+      const grade = pct >= 80 ? "7" : pct >= 70 ? "6" : pct >= 60 ? "5" : pct >= 50 ? "4" : pct >= 35 ? "3" : pct >= 20 ? "2" : "1";
+      const gradeColor = pct >= 70 ? "#4ade80" : pct >= 50 ? "#f59e0b" : "#f87171";
+      const sm = q ? SECTION_META[q.section] : SECTION_META["A"];
 
-  const filteredQs = filter === "ALL" ? QUESTIONS : QUESTIONS.filter(q => q.section === filter);
-  const q = filteredQs[currentQ];
+      return (
+        <div style={{ minHeight: "100vh", background: "#09090b", color: "#e4e4e7", fontFamily: "Georgia, serif", padding: 0 }}>
 
-  const totalMarks = QUESTIONS.reduce((s, q) => s + q.marks, 0);
-  const earnedMarks = Object.entries(results).reduce((s, [id, r]) => {
-    const question = QUESTIONS.find(q => q.id === parseInt(id));
-    return s + (r.correct ? question.marks : 0);
-  }, 0);
-  const attempted = Object.keys(results).length;
+          {/* TOP BAR */}
+          <div style={{ background: "linear-gradient(135deg,#18181b,#09090b)", borderBottom: "1px solid #27272a", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 100 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: "-1px", color: "#fff" }}>🥋 Revision Dojo</span>
+              <span style={{ fontSize: 11, color: "#71717a", letterSpacing: "2px", textTransform: "uppercase" }}>IB CS 2027 · Stacks & Queues · B.4 HL</span>
+            </div>
+            <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+              <span style={{ fontSize: 13, color: "#a1a1aa" }}>
+                Score: <span style={{ color: gradeColor, fontWeight: 700 }}>{earnedMarks}</span>
+                <span style={{ color: "#52525b" }}>/{totalMarks}</span>
+              </span>
+              <span style={{ background: gradeColor + "22", border: `1px solid ${gradeColor}44`, color: gradeColor, borderRadius: 6, padding: "3px 10px", fontSize: 12, fontWeight: 700 }}>Grade {grade}</span>
+              {mode !== "exam" && (
+                <button onClick={handleRestart} style={{ background: "#27272a", border: "1px solid #3f3f46", color: "#e4e4e7", borderRadius: 6, padding: "5px 14px", cursor: "pointer", fontSize: 12 }}>↺ Restart</button>
+              )}
+            </div>
+          </div>
 
-  function handleConfirm() {
-    if (selected === null) return;
-    const correct = selected === q.answer;
-    setResults(prev => ({ ...prev, [q.id]: { correct, selected } }));
-    setConfirmed(true);
-    setShowExplanation(true);
-  }
+          {/* SECTION FILTER */}
+          <div style={{ padding: "12px 24px", display: "flex", gap: 8, borderBottom: "1px solid #18181b", overflowX: "auto" }}>
+            {["ALL","A","B","C","D","E"].map(s => (
+              <button key={s} onClick={() => { setFilter(s); setCurrentQ(0); setSelected(null); setConfirmed(false); setShowExplanation(false); }} style={{ background: filter === s ? "#27272a" : "transparent", border: `1px solid ${filter === s ? "#52525b" : "#27272a"}`, color: filter === s ? "#fff" : "#71717a", borderRadius: 6, padding: "5px 14px", cursor: "pointer", fontSize: 12, whiteSpace: "nowrap", fontFamily: "Georgia, serif" }}>
+                {s === "ALL" ? "All Questions" : SECTION_META[s].label.split("—")[0].trim()}
+              </button>
+            ))}
+          </div>
 
-  function handleNext() {
-    if (currentQ < filteredQs.length - 1) {
-      setCurrentQ(c => c + 1);
-      setSelected(null);
-      setConfirmed(false);
-      setShowExplanation(false);
-      setAnimKey(k => k + 1);
-    } else {
-      setMode("score");
-    }
-  }
+          {mode === "score" ? (
+            <div style={{ maxWidth: 700, margin: "40px auto", padding: "0 24px" }}>
+              <div style={{ textAlign: "center", marginBottom: 40 }}>
+                <div style={{ fontSize: 64, marginBottom: 8 }}>{pct >= 70 ? "🏆" : pct >= 50 ? "⚔️" : "📚"}</div>
+                <h2 style={{ fontSize: 32, fontWeight: 900, margin: "0 0 8px", letterSpacing: "-1px", color: "#fff" }}>Exam Complete</h2>
+                <div style={{ fontSize: 48, fontWeight: 900, color: gradeColor, margin: "12px 0" }}>{pct}%</div>
+                <div style={{ color: "#a1a1aa", fontSize: 16 }}>{earnedMarks} / {totalMarks} marks · IB Predicted Grade: <span style={{ color: gradeColor, fontWeight: 700 }}>{grade}</span></div>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 32 }}>
+                {Object.entries(SECTION_META).map(([sec, meta]) => {
+                  const qs = QUESTIONS.filter(q => q.section === sec);
+                  const earned = qs.reduce((s, q) => s + (results[q.id]?.correct ? q.marks : 0), 0);
+                  const max = qs.reduce((s, q) => s + q.marks, 0);
+                  const p = max > 0 ? Math.round((earned / max) * 100) : 0;
+                  return (
+                    <div key={sec} style={{ background: "#18181b", border: "1px solid #27272a", borderRadius: 10, padding: "14px 18px" }}>
+                      <div style={{ fontSize: 11, color: meta.color, letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>{meta.icon} {meta.label.split("—")[1]?.trim()}</div>
+                      <div style={{ fontSize: 22, fontWeight: 800, color: "#fff" }}>{p}%</div>
+                      <div style={{ fontSize: 12, color: "#71717a" }}>{earned}/{max} marks</div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+                <button onClick={handleRestart} style={{ background: "#4ade80", color: "#000", border: "none", borderRadius: 8, padding: "12px 32px", cursor: "pointer", fontSize: 15, fontWeight: 700, fontFamily: "Georgia, serif" }}>↺ Retake Exam</button>
+                <button onClick={() => { setMode("review"); setCurrentQ(0); }} style={{ background: "#27272a", color: "#e4e4e7", border: "1px solid #3f3f46", borderRadius: 8, padding: "12px 32px", cursor: "pointer", fontSize: 15, fontFamily: "Georgia, serif" }}>📖 Review Answers</button>
+              </div>
+            </div>
+          ) : (
+            <div style={{ display: "flex", minHeight: "calc(100vh - 120px)" }}>
 
-  function handleRestart() {
-    setCurrentQ(0);
-    setSelected(null);
-    setConfirmed(false);
-    setShowExplanation(false);
-    setResults({});
-    setMode("exam");
-    setAnimKey(k => k + 1);
-  }
+              {/* LEFT NAV */}
+              <div style={{ width: 180, minWidth: 180, borderRight: "1px solid #18181b", padding: "16px 12px", overflowY: "auto" }}>
+                <div style={{ fontSize: 10, color: "#52525b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10, paddingLeft: 4 }}>Questions</div>
+                {filteredQs.map((fq, idx) => {
+                  const r = results[fq.id];
+                  const isCurrent = idx === currentQ;
+                  return (
+                    <button key={fq.id} onClick={() => jumpTo(idx)} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", textAlign: "left", background: isCurrent ? "#27272a" : "transparent", border: isCurrent ? "1px solid #3f3f46" : "1px solid transparent", borderRadius: 8, padding: "7px 10px", cursor: "pointer", marginBottom: 3 }}>
+                      <span style={{ width: 22, height: 22, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, background: r ? (r.correct ? "#052e16" : "#1c0505") : "#18181b", color: r ? (r.correct ? "#4ade80" : "#f87171") : "#71717a", border: `1px solid ${r ? (r.correct ? "#4ade80" : "#f87171") : "#27272a"}`, flexShrink: 0 }}>{r ? (r.correct ? "✓" : "✗") : fq.id}</span>
+                      <span style={{ fontSize: 11, color: isCurrent ? "#fff" : "#71717a", lineHeight: 1.3 }}>{fq.topic.length > 20 ? fq.topic.substring(0, 18) + "…" : fq.topic}</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-  function jumpTo(idx) {
-    setCurrentQ(idx);
-    setSelected(results[filteredQs[idx]?.id]?.selected ?? null);
-    setConfirmed(!!results[filteredQs[idx]?.id]);
-    setShowExplanation(!!results[filteredQs[idx]?.id]);
-    setMode("exam");
-    setAnimKey(k => k + 1);
-  }
+              {/* MAIN */}
+              <div style={{ flex: 1, padding: "28px 32px 60px", maxWidth: 820, overflowY: "auto" }} key={animKey}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                  <span style={{ background: sm.bg, color: sm.color, border: `1px solid ${sm.color}33`, borderRadius: 6, padding: "4px 12px", fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>{sm.icon} {sm.label}</span>
+                  <span style={{ background: DIFF_COLOR[q.difficulty] + "18", color: DIFF_COLOR[q.difficulty], border: `1px solid ${DIFF_COLOR[q.difficulty]}33`, borderRadius: 6, padding: "4px 12px", fontSize: 11, fontWeight: 600 }}>{q.difficulty}</span>
+                  <span style={{ color: "#52525b", fontSize: 11 }}>[{q.marks} mark{q.marks > 1 ? "s" : ""}]</span>
+                  <span style={{ marginLeft: "auto", color: "#52525b", fontSize: 12 }}>{currentQ + 1} / {filteredQs.length}</span>
+                </div>
 
-  const pct = totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
-  const grade = pct >= 80 ? "7" : pct >= 70 ? "6" : pct >= 60 ? "5" : pct >= 50 ? "4" : pct >= 35 ? "3" : pct >= 20 ? "2" : "1";
-  const gradeColor = pct >= 70 ? "#4ade80" : pct >= 50 ? "#f59e0b" : "#f87171";
+                <div style={{ background: "#18181b", borderRadius: 4, height: 4, marginBottom: 28, overflow: "hidden" }}>
+                  <div style={{ background: `linear-gradient(90deg,${sm.color},${sm.color}88)`, height: "100%", width: `${((currentQ + 1) / filteredQs.length) * 100}%`, transition: "width 0.4s ease", borderRadius: 4 }} />
+                </div>
 
-  const sm = q ? SECTION_META[q.section] : SECTION_META["A"];
+                <div style={{ marginBottom: 20 }}>
+                  <div style={{ fontSize: 12, color: "#71717a", marginBottom: 8 }}>Q{q.id} · {q.topic}</div>
+                  <div style={{ fontSize: 17, lineHeight: 1.7, color: "#e4e4e7", whiteSpace: "pre-line" }}>{q.question}</div>
+                </div>
 
-  return (
-    <div style={{
-      minHeight: "100vh",
-      background: "#09090b",
-      color: "#e4e4e7",
-      fontFamily: "'Georgia', serif",
-      padding: "0",
-    }}>
+                {q.code && (
+                  <div style={{ background: "#0a0a0a", border: "1px solid #27272a", borderRadius: 10, padding: "16px 20px", marginBottom: 24, fontFamily: "Courier New, monospace", fontSize: 13, lineHeight: 1.7, color: "#a3e635", overflowX: "auto", whiteSpace: "pre" }}>{q.code}</div>
+                )}
 
-      {/* TOP BAR */}
-      <div style={{
-        background: "linear-gradient(135deg, #18181b 0%, #09090b 100%)",
-        borderBottom: "1px solid #27272a",
-        padding: "14px 24px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-      }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: 22, fontWeight: 900, letterSpacing: "-1px", color: "#fff", fontFamily: "Georgia, serif" }}>
-            🥋 Revision Dojo
-          </span>
-          <span style={{ fontSize: 11, color: "#71717a", letterSpacing: "2px", textTransform: "uppercase", marginLeft: 8 }}>
-            IB CS 2027 · Stacks & Queues · B.4 HL
-          </span>
-        </div>
-        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-          <span style={{ fontSize: 13, color: "#a1a1aa" }}>
-            Score: <span style={{ color: gradeColor, fontWeight: 700 }}>{earnedMarks}</span>
-            <span style={{ color: "#52525b" }}>/{totalMarks}</span>
-          </span>
-          <span style={{
-            background: gradeColor + "22",
-            border: `1px solid ${gradeColor}44`,
-            color: gradeColor,
-            borderRadius: 6,
-            padding: "3px 10px",
-            fontSize: 12,
-            fontWeight: 700,
-            letterSpacing: 1,
-          }}>Grade {grade}</span>
-          {mode !== "exam" && (
-            <button onClick={handleRestart} style={{
-              background: "#27272a", border: "1px solid #3f3f46", color: "#e4e4e7",
-              borderRadius: 6, padding: "5px 14px", cursor: "pointer", fontSize: 12,
-            }}>↺ Restart</button>
+                {q.traceSteps && (
+                  <div style={{ marginBottom: 24, overflowX: "auto" }}>
+                    <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13 }}>
+                      <thead>
+                        <tr style={{ background: "#18181b" }}>
+                          {["Operation", "Returned Value", q.topic.includes("Queue") ? "Queue (front→rear)" : "Stack (bottom→top)"].map((h, i) => (
+                            <th key={i} style={{ padding: "10px 14px", textAlign: "left", color: "#a1a1aa", fontWeight: 600, border: "1px solid #27272a" }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {q.traceSteps.map((step, i) => (
+                          <tr key={i} style={{ background: i % 2 === 0 ? "#0f0f0f" : "#131313" }}>
+                            <td style={{ padding: "9px 14px", border: "1px solid #27272a", fontFamily: "monospace", color: "#60a5fa" }}>{step.op}</td>
+                            <td style={{ padding: "9px 14px", border: "1px solid #27272a", color: confirmed ? "#f59e0b" : "#52525b", fontFamily: "monospace" }}>{confirmed ? step.returned : "?"}</td>
+                            <td style={{ padding: "9px 14px", border: "1px solid #27272a", color: confirmed ? "#4ade80" : "#52525b", fontFamily: "monospace" }}>{confirmed ? (step.stack || step.queue) : "?"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    {!confirmed && <div style={{ fontSize: 11, color: "#52525b", marginTop: 8 }}>↑ Trace table revealed after you answer</div>}
+                  </div>
+                )}
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
+                  {q.options.map((opt, i) => {
+                    let bg = "#18181b", border = "#27272a", col = "#e4e4e7";
+                    if (selected === i && !confirmed) { bg = "#1c1917"; border = "#a3e635"; col = "#fff"; }
+                    if (confirmed) {
+                      if (i === q.answer) { bg = "#052e16"; border = "#4ade80"; col = "#4ade80"; }
+                      else if (i === selected && selected !== q.answer) { bg = "#1c0505"; border = "#f87171"; col = "#f87171"; }
+                    }
+                    return (
+                      <button key={i} onClick={() => !confirmed && setSelected(i)} style={{ background: bg, border: `1px solid ${border}`, borderRadius: 10, padding: "14px 18px", textAlign: "left", cursor: confirmed ? "default" : "pointer", color: col, fontSize: 14, lineHeight: 1.6, fontFamily: "Georgia, serif", whiteSpace: "pre-wrap", transition: "all 0.15s" }}>
+                        <span style={{ display: "inline-block", width: 22, height: 22, borderRadius: "50%", border: `1px solid ${border}`, textAlign: "center", lineHeight: "22px", fontSize: 11, fontWeight: 700, marginRight: 12, background: (selected === i || (confirmed && i === q.answer)) ? border + "33" : "transparent", color: col, verticalAlign: "top", marginTop: 1 }}>
+                          {confirmed && i === q.answer ? "✓" : confirmed && i === selected && selected !== q.answer ? "✗" : "ABCD"[i]}
+                        </span>
+                        {opt}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {showExplanation && (
+                  <div style={{ background: results[q.id]?.correct ? "#052e1688" : "#1c050588", border: `1px solid ${results[q.id]?.correct ? "#4ade8044" : "#f8717144"}`, borderRadius: 10, padding: "16px 20px", marginBottom: 24, fontSize: 14, lineHeight: 1.7, color: "#d4d4d8" }}>
+                    <div style={{ fontWeight: 700, color: results[q.id]?.correct ? "#4ade80" : "#f87171", marginBottom: 6, fontSize: 13 }}>
+                      {results[q.id]?.correct ? "✓ CORRECT" : "✗ INCORRECT"} — Examiner's Explanation
+                    </div>
+                    {q.explanation}
+                  </div>
+                )}
+
+                <div style={{ display: "flex", gap: 12 }}>
+                  {!confirmed ? (
+                    <button onClick={handleConfirm} disabled={selected === null} style={{ background: selected !== null ? "#a3e635" : "#27272a", color: selected !== null ? "#000" : "#52525b", border: "none", borderRadius: 8, padding: "12px 28px", fontSize: 15, fontWeight: 700, cursor: selected !== null ? "pointer" : "default", fontFamily: "Georgia, serif" }}>
+                      Confirm Answer
+                    </button>
+                  ) : (
+                    <button onClick={handleNext} style={{ background: "#a3e635", color: "#000", border: "none", borderRadius: 8, padding: "12px 28px", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "Georgia, serif" }}>
+                      {currentQ < filteredQs.length - 1 ? "Next Question →" : "View Results"}
+                    </button>
+                  )}
+                  {!confirmed && selected !== null && (
+                    <button onClick={() => setSelected(null)} style={{ background: "transparent", color: "#71717a", border: "1px solid #27272a", borderRadius: 8, padding: "12px 20px", cursor: "pointer", fontSize: 14, fontFamily: "Georgia, serif" }}>Clear</button>
+                  )}
+                </div>
+              </div>
+
+              {/* RIGHT STATS */}
+              <div style={{ width: 200, minWidth: 200, borderLeft: "1px solid #18181b", padding: "20px 16px" }}>
+                <div style={{ fontSize: 10, color: "#52525b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 16 }}>Progress</div>
+                <div style={{ marginBottom: 20 }}>
+                  <div style={{ fontSize: 32, fontWeight: 900, color: gradeColor }}>{pct}%</div>
+                  <div style={{ fontSize: 12, color: "#71717a" }}>{earnedMarks}/{totalMarks} marks</div>
+                  <div style={{ fontSize: 11, color: "#52525b", marginTop: 4 }}>Grade {grade} predicted</div>
+                </div>
+                <div style={{ height: 1, background: "#18181b", marginBottom: 16 }} />
+                <div style={{ fontSize: 10, color: "#52525b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Sections</div>
+                {Object.entries(SECTION_META).map(([sec, meta]) => {
+                  const qs = QUESTIONS.filter(q => q.section === sec);
+                  const done = qs.filter(q => results[q.id]).length;
+                  return (
+                    <div key={sec} style={{ marginBottom: 10 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                        <span style={{ fontSize: 11, color: meta.color }}>{meta.icon} {sec}</span>
+                        <span style={{ fontSize: 11, color: "#52525b" }}>{done}/{qs.length}</span>
+                      </div>
+                      <div style={{ background: "#18181b", borderRadius: 4, height: 4, overflow: "hidden" }}>
+                        <div style={{ background: meta.color, height: "100%", width: `${qs.length > 0 ? (done / qs.length) * 100 : 0}%`, borderRadius: 4 }} />
+                      </div>
+                    </div>
+                  );
+                })}
+                <div style={{ height: 1, background: "#18181b", margin: "16px 0" }} />
+                <div style={{ fontSize: 10, color: "#52525b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Difficulty</div>
+                {["Foundation", "Standard", "Higher"].map(d => {
+                  const qs = QUESTIONS.filter(q => q.difficulty === d);
+                  const correct = qs.filter(q => results[q.id]?.correct).length;
+                  return (
+                    <div key={d} style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                      <span style={{ fontSize: 11, color: DIFF_COLOR[d] }}>{d}</span>
+                      <span style={{ fontSize: 11, color: "#52525b" }}>{correct}/{qs.length}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           )}
         </div>
-      </div>
+      );
+    }
 
-      {/* SECTION FILTER */}
-      <div style={{ padding: "12px 24px", display: "flex", gap: 8, borderBottom: "1px solid #18181b", overflowX: "auto" }}>
-        {["ALL", "A", "B", "C", "D", "E"].map(s => (
-          <button key={s} onClick={() => { setFilter(s); setCurrentQ(0); setSelected(null); setConfirmed(false); setShowExplanation(false); }} style={{
-            background: filter === s ? "#27272a" : "transparent",
-            border: `1px solid ${filter === s ? "#52525b" : "#27272a"}`,
-            color: filter === s ? "#fff" : "#71717a",
-            borderRadius: 6, padding: "5px 14px",
-            cursor: "pointer", fontSize: 12, whiteSpace: "nowrap",
-            fontFamily: "Georgia, serif",
-          }}>
-            {s === "ALL" ? "All Questions" : SECTION_META[s].label.split("—")[0].trim()}
-          </button>
-        ))}
-      </div>
+    const root = ReactDOM.createRoot(document.getElementById("revision-dojo-root"));
+    root.render(<RevisionDojo />);
+  </script>
 
-      {mode === "score" ? (
-        // SCORE SCREEN
-        <div style={{ maxWidth: 700, margin: "40px auto", padding: "0 24px" }}>
-          <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <div style={{ fontSize: 64, marginBottom: 8 }}>
-              {pct >= 70 ? "🏆" : pct >= 50 ? "⚔️" : "📚"}
-            </div>
-            <h2 style={{ fontSize: 32, fontWeight: 900, margin: "0 0 8px", letterSpacing: "-1px" }}>
-              Exam Complete
-            </h2>
-            <div style={{ fontSize: 48, fontWeight: 900, color: gradeColor, margin: "12px 0" }}>
-              {pct}%
-            </div>
-            <div style={{ color: "#a1a1aa", fontSize: 16 }}>
-              {earnedMarks} / {totalMarks} marks · IB Predicted Grade:{" "}
-              <span style={{ color: gradeColor, fontWeight: 700 }}>{grade}</span>
-            </div>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 32 }}>
-            {Object.entries(SECTION_META).map(([sec, meta]) => {
-              const qs = QUESTIONS.filter(q => q.section === sec);
-              const earned = qs.reduce((s, q) => s + (results[q.id]?.correct ? q.marks : 0), 0);
-              const max = qs.reduce((s, q) => s + q.marks, 0);
-              const p = max > 0 ? Math.round((earned / max) * 100) : 0;
-              return (
-                <div key={sec} style={{ background: "#18181b", border: "1px solid #27272a", borderRadius: 10, padding: "14px 18px" }}>
-                  <div style={{ fontSize: 11, color: meta.color, letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>{meta.icon} {meta.label.split("—")[1]?.trim()}</div>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: "#fff" }}>{p}%</div>
-                  <div style={{ fontSize: 12, color: "#71717a" }}>{earned}/{max} marks</div>
-                </div>
-              );
-            })}
-          </div>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-            <button onClick={handleRestart} style={{
-              background: "#4ade80", color: "#000", border: "none",
-              borderRadius: 8, padding: "12px 32px", cursor: "pointer",
-              fontSize: 15, fontWeight: 700, fontFamily: "Georgia, serif",
-            }}>↺ Retake Exam</button>
-            <button onClick={() => { setMode("review"); setCurrentQ(0); }} style={{
-              background: "#27272a", color: "#e4e4e7", border: "1px solid #3f3f46",
-              borderRadius: 8, padding: "12px 32px", cursor: "pointer",
-              fontSize: 15, fontFamily: "Georgia, serif",
-            }}>📖 Review Answers</button>
-          </div>
-        </div>
-      ) : (
-        <div style={{ display: "flex", gap: 0, minHeight: "calc(100vh - 120px)" }}>
+  <br>
+  <div style="background:#09090b; padding: 16px 24px;">
+    <a href="index.html" style="color:#71717a; font-family: Georgia, serif; font-size: 14px;">← Go back to the Home Page</a>
+  </div>
 
-          {/* QUESTION NAV SIDEBAR */}
-          <div style={{
-            width: 180, minWidth: 180, borderRight: "1px solid #18181b",
-            padding: "16px 12px", overflowY: "auto",
-          }}>
-            <div style={{ fontSize: 10, color: "#52525b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10, paddingLeft: 4 }}>Questions</div>
-            {filteredQs.map((fq, idx) => {
-              const r = results[fq.id];
-              const isCurrent = idx === currentQ;
-              return (
-                <button key={fq.id} onClick={() => jumpTo(idx)} style={{
-                  display: "flex", alignItems: "center", gap: 8,
-                  width: "100%", textAlign: "left", background: isCurrent ? "#27272a" : "transparent",
-                  border: isCurrent ? "1px solid #3f3f46" : "1px solid transparent",
-                  borderRadius: 8, padding: "7px 10px", cursor: "pointer",
-                  marginBottom: 3,
-                }}>
-                  <span style={{
-                    width: 22, height: 22, borderRadius: "50%", display: "flex",
-                    alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700,
-                    background: r ? (r.correct ? "#052e16" : "#1c0505") : "#18181b",
-                    color: r ? (r.correct ? "#4ade80" : "#f87171") : "#71717a",
-                    border: `1px solid ${r ? (r.correct ? "#4ade80" : "#f87171") : "#27272a"}`,
-                    flexShrink: 0,
-                  }}>{r ? (r.correct ? "✓" : "✗") : fq.id}</span>
-                  <span style={{ fontSize: 11, color: isCurrent ? "#fff" : "#71717a", lineHeight: 1.3 }}>
-                    {fq.topic.length > 20 ? fq.topic.substring(0, 18) + "…" : fq.topic}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* MAIN CONTENT */}
-          <div style={{ flex: 1, padding: "28px 32px 60px", maxWidth: 820, overflowY: "auto" }} key={animKey}>
-
-            {/* Section badge */}
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-              <span style={{
-                background: sm.bg, color: sm.color,
-                border: `1px solid ${sm.color}33`,
-                borderRadius: 6, padding: "4px 12px", fontSize: 11,
-                fontWeight: 700, letterSpacing: 1, textTransform: "uppercase",
-              }}>{sm.icon} {sm.label}</span>
-              <span style={{
-                background: DIFF_COLOR[q.difficulty] + "18",
-                color: DIFF_COLOR[q.difficulty],
-                border: `1px solid ${DIFF_COLOR[q.difficulty]}33`,
-                borderRadius: 6, padding: "4px 12px", fontSize: 11, fontWeight: 600,
-              }}>{q.difficulty}</span>
-              <span style={{ color: "#52525b", fontSize: 11 }}>[{q.marks} mark{q.marks > 1 ? "s" : ""}]</span>
-              <span style={{ marginLeft: "auto", color: "#52525b", fontSize: 12 }}>
-                {currentQ + 1} / {filteredQs.length}
-              </span>
-            </div>
-
-            {/* Progress bar */}
-            <div style={{ background: "#18181b", borderRadius: 4, height: 4, marginBottom: 28, overflow: "hidden" }}>
-              <div style={{
-                background: `linear-gradient(90deg, ${sm.color}, ${sm.color}88)`,
-                height: "100%",
-                width: `${((currentQ + 1) / filteredQs.length) * 100}%`,
-                transition: "width 0.4s ease",
-                borderRadius: 4,
-              }} />
-            </div>
-
-            {/* Question text */}
-            <div style={{ marginBottom: 20 }}>
-              <div style={{ fontSize: 12, color: "#71717a", marginBottom: 8, letterSpacing: 0.5 }}>
-                Q{q.id} · {q.topic}
-              </div>
-              <div style={{
-                fontSize: 17, lineHeight: 1.7, color: "#e4e4e7",
-                whiteSpace: "pre-line", fontFamily: "Georgia, serif",
-              }}>
-                {q.question}
-              </div>
-            </div>
-
-            {/* Code block if present */}
-            {q.code && (
-              <div style={{
-                background: "#0a0a0a", border: "1px solid #27272a",
-                borderRadius: 10, padding: "16px 20px", marginBottom: 24,
-                fontFamily: "'Courier New', monospace", fontSize: 13,
-                lineHeight: 1.7, color: "#a3e635", overflowX: "auto",
-                whiteSpace: "pre",
-              }}>
-                {q.code}
-              </div>
-            )}
-
-            {/* Trace table if section B */}
-            {q.traceSteps && (
-              <div style={{ marginBottom: 24, overflowX: "auto" }}>
-                <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 13 }}>
-                  <thead>
-                    <tr style={{ background: "#18181b" }}>
-                      {["Operation", "Returned Value", q.section === "B" && q.topic.includes("Queue") ? "Queue (front→rear)" : "Stack (bottom→top)"].map((h, i) => (
-                        <th key={i} style={{ padding: "10px 14px", textAlign: "left", color: "#a1a1aa", fontWeight: 600, border: "1px solid #27272a", fontFamily: "Georgia, serif" }}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {q.traceSteps.map((step, i) => (
-                      <tr key={i} style={{ background: i % 2 === 0 ? "#0f0f0f" : "#131313" }}>
-                        <td style={{ padding: "9px 14px", border: "1px solid #27272a", fontFamily: "monospace", color: "#60a5fa" }}>{step.op}</td>
-                        <td style={{ padding: "9px 14px", border: "1px solid #27272a", color: confirmed ? "#f59e0b" : "#52525b", fontFamily: "monospace" }}>
-                          {confirmed ? step.returned : "?"}
-                        </td>
-                        <td style={{ padding: "9px 14px", border: "1px solid #27272a", color: confirmed ? "#4ade80" : "#52525b", fontFamily: "monospace" }}>
-                          {confirmed ? (step.stack || step.queue) : "?"}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {!confirmed && <div style={{ fontSize: 11, color: "#52525b", marginTop: 8 }}>
-                  ↑ Trace table revealed after you answer
-                </div>}
-              </div>
-            )}
-
-            {/* Options */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
-              {q.options.map((opt, i) => {
-                let bg = "#18181b", border = "#27272a", col = "#e4e4e7";
-                if (selected === i && !confirmed) { bg = "#1c1917"; border = "#a3e635"; col = "#fff"; }
-                if (confirmed) {
-                  if (i === q.answer) { bg = "#052e16"; border = "#4ade80"; col = "#4ade80"; }
-                  else if (i === selected && selected !== q.answer) { bg = "#1c0505"; border = "#f87171"; col = "#f87171"; }
-                }
-                return (
-                  <button key={i} onClick={() => !confirmed && setSelected(i)} style={{
-                    background: bg, border: `1px solid ${border}`, borderRadius: 10,
-                    padding: "14px 18px", textAlign: "left", cursor: confirmed ? "default" : "pointer",
-                    color: col, fontSize: 14, lineHeight: 1.6, fontFamily: "Georgia, serif",
-                    whiteSpace: "pre-wrap",
-                    transition: "all 0.15s",
-                  }}>
-                    <span style={{
-                      display: "inline-block", width: 22, height: 22, borderRadius: "50%",
-                      border: `1px solid ${border}`, textAlign: "center", lineHeight: "22px",
-                      fontSize: 11, fontWeight: 700, marginRight: 12, flexShrink: 0,
-                      background: selected === i || (confirmed && i === q.answer) ? border + "33" : "transparent",
-                      color: col, verticalAlign: "top", marginTop: 1,
-                    }}>
-                      {confirmed && i === q.answer ? "✓" : confirmed && i === selected && selected !== q.answer ? "✗" : "ABCD"[i]}
-                    </span>
-                    {opt}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Explanation */}
-            {showExplanation && (
-              <div style={{
-                background: results[q.id]?.correct ? "#052e1688" : "#1c050588",
-                border: `1px solid ${results[q.id]?.correct ? "#4ade8044" : "#f8717144"}`,
-                borderRadius: 10, padding: "16px 20px", marginBottom: 24,
-                fontSize: 14, lineHeight: 1.7, color: "#d4d4d8",
-              }}>
-                <div style={{ fontWeight: 700, color: results[q.id]?.correct ? "#4ade80" : "#f87171", marginBottom: 6, fontSize: 13, letterSpacing: 0.5 }}>
-                  {results[q.id]?.correct ? "✓ CORRECT" : "✗ INCORRECT"} — Examiner's Explanation
-                </div>
-                {q.explanation}
-              </div>
-            )}
-
-            {/* Action buttons */}
-            <div style={{ display: "flex", gap: 12 }}>
-              {!confirmed ? (
-                <button onClick={handleConfirm} disabled={selected === null} style={{
-                  background: selected !== null ? "#a3e635" : "#27272a",
-                  color: selected !== null ? "#000" : "#52525b",
-                  border: "none", borderRadius: 8, padding: "12px 28px",
-                  fontSize: 15, fontWeight: 700, cursor: selected !== null ? "pointer" : "default",
-                  fontFamily: "Georgia, serif",
-                  transition: "all 0.15s",
-                }}>
-                  Confirm Answer
-                </button>
-              ) : (
-                <button onClick={handleNext} style={{
-                  background: "#a3e635", color: "#000", border: "none",
-                  borderRadius: 8, padding: "12px 28px", fontSize: 15,
-                  fontWeight: 700, cursor: "pointer", fontFamily: "Georgia, serif",
-                }}>
-                  {currentQ < filteredQs.length - 1 ? "Next Question →" : "View Results"}
-                </button>
-              )}
-              {!confirmed && selected !== null && (
-                <button onClick={() => setSelected(null)} style={{
-                  background: "transparent", color: "#71717a", border: "1px solid #27272a",
-                  borderRadius: 8, padding: "12px 20px", cursor: "pointer", fontSize: 14,
-                  fontFamily: "Georgia, serif",
-                }}>Clear</button>
-              )}
-            </div>
-
-          </div>
-
-          {/* RIGHT PANEL — stats */}
-          <div style={{ width: 200, minWidth: 200, borderLeft: "1px solid #18181b", padding: "20px 16px" }}>
-            <div style={{ fontSize: 10, color: "#52525b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 16 }}>Progress</div>
-            <div style={{ marginBottom: 20 }}>
-              <div style={{ fontSize: 32, fontWeight: 900, color: gradeColor }}>{pct}%</div>
-              <div style={{ fontSize: 12, color: "#71717a" }}>{earnedMarks}/{totalMarks} marks</div>
-              <div style={{ fontSize: 11, color: "#52525b", marginTop: 4 }}>Grade {grade} predicted</div>
-            </div>
-            <div style={{ height: 1, background: "#18181b", marginBottom: 16 }} />
-            <div style={{ fontSize: 10, color: "#52525b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Sections</div>
-            {Object.entries(SECTION_META).map(([sec, meta]) => {
-              const qs = QUESTIONS.filter(q => q.section === sec);
-              const done = qs.filter(q => results[q.id]).length;
-              return (
-                <div key={sec} style={{ marginBottom: 10 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                    <span style={{ fontSize: 11, color: meta.color }}>{meta.icon} {sec}</span>
-                    <span style={{ fontSize: 11, color: "#52525b" }}>{done}/{qs.length}</span>
-                  </div>
-                  <div style={{ background: "#18181b", borderRadius: 4, height: 4, overflow: "hidden" }}>
-                    <div style={{ background: meta.color, height: "100%", width: `${qs.length > 0 ? (done / qs.length) * 100 : 0}%`, borderRadius: 4 }} />
-                  </div>
-                </div>
-              );
-            })}
-            <div style={{ height: 1, background: "#18181b", margin: "16px 0" }} />
-            <div style={{ fontSize: 10, color: "#52525b", letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Difficulty</div>
-            {["Foundation", "Standard", "Higher"].map(d => {
-              const qs = QUESTIONS.filter(q => q.difficulty === d);
-              const correct = qs.filter(q => results[q.id]?.correct).length;
-              return (
-                <div key={d} style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                  <span style={{ fontSize: 11, color: DIFF_COLOR[d] }}>{d}</span>
-                  <span style={{ fontSize: 11, color: "#52525b" }}>{correct}/{qs.length}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-  
-  <br><br>
-  <a href="index.html">Go back to the Home Page</a>
 </body>
 </html>
