@@ -1,0 +1,7 @@
+{
+  "name": "code-check-tests",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node marking.test.mjs" },
+  "devDependencies": { "pyodide": "0.26.4" }
+}

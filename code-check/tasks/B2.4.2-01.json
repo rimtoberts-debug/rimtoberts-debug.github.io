@@ -1,0 +1,19 @@
+{
+  "id": "B2.4.2-01",
+  "code": "B2.4.2",
+  "hl_only": false,
+  "title": "Linear search",
+  "brief": "Write linear_search(a, target) that returns the index of the first occurrence of target in the list a, or -1 if it is not present. Check each element in turn from the start.",
+  "starter": "def linear_search(a, target):\n    ...",
+  "function": "linear_search",
+  "tests": [
+    {"args": [[4, 2, 7, 9], 7], "expected": 2, "marks": 1},
+    {"args": [[4, 2, 7, 9], 4], "expected": 0, "marks": 1},
+    {"args": [[4, 2, 7, 9], 5], "expected": -1, "marks": 1},
+    {"args": [[], 1], "expected": -1, "marks": 1},
+    {"args": [[3, 3, 3], 3], "expected": 0, "marks": 1}
+  ],
+  "banned": ["index", "find"],
+  "markpoints": ["Loops through the elements from the start", "Compares each element with the target", "Returns the index as soon as a match is found", "Returns -1 only after the whole list has been checked"],
+  "java_reference": "public static int linearSearch(int[] a, int target) {\n    for (int i = 0; i < a.length; i++) {\n        if (a[i] == target) {\n            return i;\n        }\n    }\n    return -1;\n}"
+}

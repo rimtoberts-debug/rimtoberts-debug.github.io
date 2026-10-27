@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Code Check | ApexIB Labs</title>
+<meta name="description" content="Write Python in your browser and mark it against tests, with banned built-in checks and mark-point self-assessment. IB Computer Science.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap"><a class="brand" href="../labs.html">&larr; Apex<span>IB</span> Labs</a><span class="tag">Code Check</span></div></header>
+<main class="wrap">
+<h1>Code Check</h1>
+<div class="row">
+  <label for="task">Task</label>
+  <select id="task" aria-label="Task"></select>
+  <span id="hlTag" class="tag hl" hidden>HL only</span>
+</div>
+<div id="status" class="note" role="status" aria-live="polite">Loading Python runtime&hellip;</div>
+<section class="card" id="taskCard" hidden>
+  <h2 id="title"></h2>
+  <p id="brief"></p>
+  <div id="banner" class="banner" hidden></div>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tabPy" aria-selected="true" aria-controls="panePy">Python</button>
+    <button role="tab" id="tabJava" aria-selected="false" aria-controls="paneJava">Java version</button>
+  </div>
+  <div id="panePy" role="tabpanel" aria-labelledby="tabPy">
+    <div class="editor">
+      <div id="gutter" class="gutter" aria-hidden="true">1</div>
+      <textarea id="code" class="code" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off" aria-label="Python code editor. Press Escape then Tab to leave the editor."></textarea>
+    </div>
+    <p class="note">Tab inserts 4 spaces. Press Escape, then Tab, to move focus out.</p>
+    <div class="row">
+      <button id="run" class="primary" disabled>Run</button>
+      <button id="mark" disabled>Mark</button>
+      <button id="reset">Reset to starter</button>
+    </div>
+    <h3>Output</h3>
+    <pre id="out" class="out" aria-live="polite"></pre>
+    <div id="results"></div>
+    <div id="points" hidden>
+      <h3>Mark points (self-assess)</h3>
+      <p class="note">Not auto-marked. Tick each point your code achieves.</p>
+      <ul id="pointList" class="points"></ul>
+    </div>
+  </div>
+  <div id="paneJava" role="tabpanel" aria-labelledby="tabJava" hidden>
+    <p class="note">Java execution is not yet supported.</p>
+    <pre id="java" class="out" tabindex="0"></pre>
+  </div>
+</section>
+<section class="card">
+  <h3>Progress</h3>
+  <div class="row">
+    <button id="export">Export JSON</button>
+    <label class="btn" for="import">Import JSON</label>
+    <input type="file" id="import" accept="application/json,.json" class="sr">
+    <span id="ioMsg" class="note" role="status"></span>
+  </div>
+</section>
+</main>
+<footer class="wrap site-footer">ApexIB is independent and not affiliated with or endorsed by the International Baccalaureate Organization. &middot; <a href="../privacy.html">Privacy</a> &middot; <a href="../labs.html">ApexIB Labs</a></footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>
