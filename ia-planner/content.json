@@ -1,0 +1,38 @@
+{
+  "label": "For the IB CS Internal Assessment (computational solution), first assessed May 2027 onward. Not for the Nov 2026 client-based IA.",
+  "sections": [
+    {"id": "A", "title": "Problem specification", "marks": 4, "words": 300, "checklist": [
+      "Say who the problem belongs to and why a computational solution suits it.",
+      "Describe the situation in your own words, with only the detail the reader needs.",
+      "Set out the requirements as success criteria you can later test (use the builder below).",
+      "Note limits on scope: what the solution will deliberately not do."]},
+    {"id": "B", "title": "Planning", "marks": 4, "words": 150, "checklist": [
+      "Break the problem into smaller parts, and those parts into tasks.",
+      "Give each task rough start and end dates in the decomposition tool.",
+      "Link each planned task back to the success criterion it serves.",
+      "Show how the order of work was decided, and what you would do if a task slips."]},
+    {"id": "C", "title": "System overview", "marks": 6, "words": 150, "checklist": [
+      "Show how the main parts fit together, using diagrams where a picture is clearer than words.",
+      "Mark the diagram positions with a [diagram: ...] placeholder so they are not counted as words.",
+      "Name the data the system stores and how it moves between parts.",
+      "Keep the overview short; detail belongs in the development section."]},
+    {"id": "D", "title": "Development", "marks": 12, "words": 1000, "checklist": [
+      "Pick the techniques that carry the solution and explain why each was chosen.",
+      "Point to the code excerpts in your register rather than pasting large blocks.",
+      "Show how you tested and fixed problems as you went, with evidence.",
+      "Make sure the full source code is in the appendix; the excerpts only highlight parts of it.",
+      "Credit any code or ideas you did not write yourself."]},
+    {"id": "E", "title": "Evaluation", "marks": 4, "words": 400, "checklist": [
+      "Judge each success criterion honestly using the table below, with evidence for each.",
+      "Discuss how well the solution works: correctness, reliability and efficiency.",
+      "Say what feedback you gathered and what it changed.",
+      "Suggest specific improvements and extensions, and why they matter."]}
+  ],
+  "videoTips": [
+    "Keep the whole video at five minutes or less.",
+    "Show the solution running against each success criterion, one shot per criterion.",
+    "Speak or caption what is happening; do not rely on the viewer guessing.",
+    "Rehearse once with a timer, then update the estimates below."
+  ],
+  "codeReminder": "Reminder: the full source code must be included in the appendix for full marks in Development. This register only lists the excerpts you refer to."
+}

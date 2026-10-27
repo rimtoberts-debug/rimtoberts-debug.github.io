@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IA Planner - ApexIB Labs</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap"><a class="brand" href="../labs.html">&larr; ApexIB <span>Labs</span></a></div></header>
+<main class="wrap" id="app">
+  <h1>IA Planner</h1>
+  <p class="notice" id="label" role="note">For the IB CS Internal Assessment (computational solution), first assessed May 2027 onward. Not for the Nov 2026 client-based IA.</p>
+  <p class="muted">This tool only helps you organise your own work. It never writes text or code for you, makes no network calls, and keeps everything in this browser.</p>
+
+  <section class="card" id="totals" aria-labelledby="h-totals">
+    <h2 id="h-totals">Word budget</h2>
+    <div id="totalbar"></div>
+    <p class="muted small">Not counted: lines inside ``` fences, lines starting with // or #, and [diagram: ...] placeholders.</p>
+  </section>
+
+  <section class="card" id="sc-sec" aria-labelledby="h-sc">
+    <h2 id="h-sc">Success criteria</h2>
+    <p class="muted">Each criterion should be measurable: include a number, a unit or a testable verb.</p>
+    <form id="sc-form" class="row">
+      <label class="grow">New criterion <input id="sc-new" type="text" class="full" autocomplete="off"></label>
+      <button class="primary" type="submit">Add</button>
+    </form>
+    <ul id="sc-list" class="plain"></ul>
+  </section>
+
+  <div id="sections"></div>
+
+  <section class="card" id="decomp" aria-labelledby="h-dec">
+    <h2 id="h-dec">Decomposition &amp; plan (Criterion B)</h2>
+    <div class="row"><button id="task-add" type="button">Add task</button></div>
+    <div class="scroll"><table id="task-table"></table></div>
+    <div id="gantt" aria-label="Gantt chart"></div>
+  </section>
+
+  <section class="card" id="tests" aria-labelledby="h-tests">
+    <h2 id="h-tests">Test plan</h2>
+    <div id="cover"></div>
+    <div class="row"><button id="test-add" type="button">Add test</button></div>
+    <div class="scroll"><table id="test-table"></table></div>
+  </section>
+
+  <section class="card" id="excerpts" aria-labelledby="h-ex">
+    <h2 id="h-ex">Code-excerpt register</h2>
+    <p class="notice" id="code-reminder"></p>
+    <div class="row"><button id="ex-add" type="button">Add excerpt</button></div>
+    <div class="scroll"><table id="ex-table"></table></div>
+  </section>
+
+  <section class="card" id="video" aria-labelledby="h-vid">
+    <h2 id="h-vid">Video checklist (5 minutes or less)</h2>
+    <ul id="video-tips"></ul>
+    <div class="row"><button id="shot-add" type="button">Add shot</button><button id="shot-fill" type="button">Add a shot for each criterion without one</button></div>
+    <div class="scroll"><table id="shot-table"></table></div>
+    <p id="shot-total" class="bold"></p>
+  </section>
+
+  <section class="card" id="data" aria-labelledby="h-data">
+    <h2 id="h-data">Your data</h2>
+    <div class="row">
+      <button id="export" type="button">Export JSON</button>
+      <label class="btn">Import JSON <input id="import" type="file" accept="application/json,.json" class="visually-hidden"></label>
+      <button id="print" type="button" class="primary">Print outline</button>
+    </div>
+    <p id="msg" role="status" class="muted"></p>
+  </section>
+
+  <section id="outline" aria-label="Outline"></section>
+</main>
+<footer class="wrap site-footer">ApexIB is independent and not affiliated with or endorsed by the International Baccalaureate Organization. &middot; <a href="../privacy.html">Privacy</a> &middot; <a href="../labs.html">Labs</a></footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>
