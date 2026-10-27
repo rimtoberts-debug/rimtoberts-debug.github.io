@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ApexIB Labs</title>
+<meta name="description" content="Free IB Computer Science (2027 syllabus) study tools: IA planner, trace tables, revision, code checker.">
+<link rel="stylesheet" href="assets/apexib.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap"><a class="brand" href="labs.html">Apex<span>IB</span> Labs</a></div></header>
+<main class="wrap">
+<h1>Free IB Computer Science tools</h1>
+<p>Built for the new IB CS syllabus (first exams May 2027). Python and Java, topic codes A1–B4, SL and HL. Your progress stays in your browser.</p>
+<div class="grid" id="tools"></div>
+</main>
+<footer class="wrap site-footer">ApexIB is independent and not affiliated with or endorsed by the International Baccalaureate Organization. · <a href="privacy.html">Privacy</a> · <a href="index.html">Home</a></footer>
+<script>
+const tools=[
+ ["ia-planner/","IA Planner","Organise your computational-solution IA: criteria A–E, word budgets, success criteria, test plan, video checklist."],
+ ["algo-trace/","Trace Tables & Visualiser","Step through searches and sorts in Python and Java, then fill in the trace table yourself."],
+ ["revise/","Revision Hub","Quizzes, flashcards and worked examples tagged by syllabus code, SL/HL filters."],
+ ["code-check/","Code Checker","Run Python in your browser, auto-mark against tests, with exam-style banned built-ins."],
+ ["games/binary-blitz/","Binary Blitz","60-second binary and hex conversion game (A1.2.1)."]];
+const g=document.getElementById('tools');
+tools.forEach(([href,name,desc])=>{
+ const c=document.createElement('a');c.className='card';c.href=href;c.style.textDecoration='none';c.style.color='inherit';
+ c.innerHTML='<h3>'+name+'</h3><p>'+desc+'</p><span class="tag" data-s>checking…</span>';g.appendChild(c);
+ fetch(href,{method:'HEAD'}).then(r=>{c.querySelector('[data-s]').textContent=r.ok?'Open':'Coming soon'}).catch(()=>{c.querySelector('[data-s]').textContent='Coming soon'});
+});
+</script>
+</body>
+</html>
