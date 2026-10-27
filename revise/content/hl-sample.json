@@ -1,0 +1,4 @@
+{"items":[
+{"id":"B4.1.1-001","code":"B4.1.1","hl_only":true,"type":"mcq","level":"IB","prompt":"Items 1, 2 and 3 are pushed onto an empty stack in that order, then pop is called once. Which value is returned?","options":["1","2","3","The stack is empty"],"answer":2,"explanation":"A stack is last in, first out, so the most recently pushed item (3) is removed first."},
+{"id":"B4.1.1-002","code":"B4.1.1","hl_only":true,"type":"flashcard","level":"IB","prompt":"What is the main difference between a stack and a queue?","answer":"A stack is LIFO: items are added and removed at the same end (the top). A queue is FIFO: items are added at the rear and removed from the front.","explanation":"Both are abstract data types: they specify behaviour, not how it is implemented."}
+]}
