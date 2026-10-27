@@ -1,0 +1,37 @@
+{
+  "version": "IB CS 2027 (titles paraphrased; check against the official guide)",
+  "topics": [
+    {"code":"A1","title":"Computer fundamentals","hl_only":false,"subtopics":[
+      {"code":"A1.1","title":"Computer hardware and operation","hl_only":false},
+      {"code":"A1.2","title":"Data representation and computer logic","hl_only":false},
+      {"code":"A1.3","title":"Operating systems and control systems","hl_only":false},
+      {"code":"A1.4","title":"Translation of programming languages","hl_only":true}]},
+    {"code":"A2","title":"Networks","hl_only":false,"subtopics":[
+      {"code":"A2.1","title":"Network fundamentals","hl_only":false},
+      {"code":"A2.2","title":"Network design and security","hl_only":false},
+      {"code":"A2.3","title":"Data transmission","hl_only":false}]},
+    {"code":"A3","title":"Databases","hl_only":false,"subtopics":[
+      {"code":"A3.1","title":"Database fundamentals","hl_only":false},
+      {"code":"A3.2","title":"Database design","hl_only":false},
+      {"code":"A3.3","title":"Database languages (SQL)","hl_only":false},
+      {"code":"A3.4","title":"Alternative database models","hl_only":true}]},
+    {"code":"A4","title":"Machine learning","hl_only":false,"subtopics":[
+      {"code":"A4.1","title":"Machine learning fundamentals","hl_only":false},
+      {"code":"A4.2","title":"Machine learning approaches","hl_only":true},
+      {"code":"A4.3","title":"Ethical issues in machine learning","hl_only":true}]},
+    {"code":"B1","title":"Computational thinking","hl_only":false,"subtopics":[
+      {"code":"B1.1","title":"Discrete mathematics","hl_only":false},
+      {"code":"B1.2","title":"Computational thinking and problem solving","hl_only":false}]},
+    {"code":"B2","title":"Programming","hl_only":false,"subtopics":[
+      {"code":"B2.1","title":"Programming fundamentals","hl_only":false},
+      {"code":"B2.2","title":"Data structures","hl_only":false},
+      {"code":"B2.3","title":"Programming constructs","hl_only":false},
+      {"code":"B2.4","title":"Algorithms","hl_only":false}]},
+    {"code":"B3","title":"Object-oriented programming","hl_only":false,"subtopics":[
+      {"code":"B3.1","title":"Object-oriented fundamentals","hl_only":false},
+      {"code":"B3.2","title":"Advanced object-oriented design","hl_only":true}]},
+    {"code":"B4","title":"Abstract data types (HL)","hl_only":true,"subtopics":[
+      {"code":"B4.1","title":"Abstract data type fundamentals","hl_only":true},
+      {"code":"B4.2","title":"Linked structures and trees","hl_only":true}]}
+  ]
+}

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revision Hub | ApexIB Labs</title>
+<meta name="description" content="Free IB Computer Science revision: quizzes, Leitner flashcards and worked examples tagged by syllabus code.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="../labs.html">&larr; ApexIB <span>Labs</span></a>
+</div></header>
+<main class="wrap">
+  <h1>Revision Hub</h1>
+  <p class="muted">Quizzes, flashcards and worked examples keyed to IB Computer Science guide codes.</p>
+
+  <form class="card filters" aria-label="Filters" onsubmit="return false">
+    <label>Topic <select id="f-topic"></select></label>
+    <label>Level
+      <select id="f-mode"><option value="SL">SL (hide HL-only)</option><option value="HL">HL (everything)</option></select>
+    </label>
+    <label>Course
+      <select id="f-level"><option value="IB">IB</option><option value="GCSE">GCSE</option></select>
+    </label>
+    <span id="f-count" class="muted" aria-live="polite"></span>
+  </form>
+
+  <div class="tabs" role="tablist" aria-label="Revision modes">
+    <button role="tab" id="t-quiz" aria-controls="p-quiz" aria-selected="true">Quiz</button>
+    <button role="tab" id="t-cards" aria-controls="p-cards" aria-selected="false">Flashcards</button>
+    <button role="tab" id="t-examples" aria-controls="p-examples" aria-selected="false">Worked examples</button>
+    <button role="tab" id="t-progress" aria-controls="p-progress" aria-selected="false">Progress</button>
+  </div>
+
+  <section id="p-quiz" role="tabpanel" aria-labelledby="t-quiz"></section>
+  <section id="p-cards" role="tabpanel" aria-labelledby="t-cards" hidden></section>
+  <section id="p-examples" role="tabpanel" aria-labelledby="t-examples" hidden></section>
+  <section id="p-progress" role="tabpanel" aria-labelledby="t-progress" hidden></section>
+  <p id="load-note" class="muted" role="status"></p>
+</main>
+<footer class="wrap site-footer">ApexIB is independent and not affiliated with or endorsed by the International Baccalaureate Organization. &middot; <a href="../privacy.html">Privacy</a> &middot; <a href="../index.html">Home</a></footer>
+
+<script type="module">
+import { h, lsGet, lsSet, loadContent, filterItems, mountQuiz, masteryRows, exportAll, importAll } from './quiz.js';
+import { mountCards } from './cards.js';
+import { mountExamples } from './examples.js';
+
+const $ = (id) => document.getElementById(id);
+const data = await loadContent('content/');
+const { syllabus } = data;
+const saved = lsGet('filters', {});
+const f = {
+  topic: typeof saved.topic === 'string' ? saved.topic : '',
+  mode: saved.mode === 'HL' ? 'HL' : 'SL',
+  level: saved.level === 'GCSE' ? 'GCSE' : 'IB',
+};
+const items = () => filterItems(data.items, f, syllabus);
+
+// filter bar
+const topicSel = $('f-topic');
+topicSel.append(h('option', { value: '' }, 'All topics'));
+for (const t of syllabus.topics) {
+  topicSel.append(h('option', { value: t.code }, `${t.code} ${t.title}`));
+  for (const s of t.subtopics || []) topicSel.append(h('option', { value: s.code }, `  ${s.code} ${s.title}${s.hl_only ? ' (HL)' : ''}`));
+}
+if (![...topicSel.options].some((o) => o.value === f.topic)) f.topic = '';
+topicSel.value = f.topic; $('f-mode').value = f.mode; $('f-level').value = f.level;
+
+if (data.problems.length) $('load-note').textContent = `${data.problems.length} content problem(s) were skipped; see the browser console.`;
+
+const quiz = mountQuiz($('p-quiz'), items);
+const cards = mountCards($('p-cards'), items);
+const examples = mountExamples($('p-examples'), items, () => data.items);
+
+function renderProgress() {
+  const root = $('p-progress');
+  root.replaceChildren();
+  const rows = masteryRows(syllabus, data.items, lsGet('scores', {}), lsGet('cards', {}));
+  const pct = (x) => (x == null ? '-' : Math.round(x * 100) + '%');
+  const tbody = h('tbody');
+  for (const r of rows) {
+    const bar = h('div', { class: 'bar', role: 'img', 'aria-label': `Mastery ${pct(r.mastery)}` }, h('span', {}));
+    bar.firstChild.style.width = (r.mastery == null ? 0 : Math.round(r.mastery * 100)) + '%';
+    tbody.append(h('tr', { class: r.level ? 'sub' : 'top' },
+      h('th', { scope: 'row' }, `${r.code} ${r.title}`, r.hl ? h('span', { class: 'tag hl' }, 'HL') : ''),
+      h('td', {}, r.total ? `${r.right}/${r.total} (${pct(r.quiz)})` : '-'),
+      h('td', {}, r.cards ? pct(r.cardPct) : '-'),
+      h('td', { class: 'barcell' }, bar, h('span', { class: 'pct' }, pct(r.mastery)))));
+  }
+  const msg = h('p', { role: 'status', 'aria-live': 'polite' });
+  const file = h('input', { type: 'file', accept: 'application/json,.json', 'aria-label': 'Import progress JSON', hidden: true, onchange: async (e) => {
+    const file0 = e.target.files[0];
+    if (!file0) return;
+    const res = importAll(await file0.text());
+    if (res.ok) { renderProgress(); const m = $('p-progress').querySelector('[role=status]'); m.textContent = 'Progress imported.'; cards.reset(); }
+    else msg.textContent = 'Import failed: ' + res.error;
+  } });
+  root.append(
+    h('div', { class: 'row' },
+      h('button', { type: 'button', onclick: () => {
+        const a = h('a', { href: URL.createObjectURL(new Blob([exportAll()], { type: 'application/json' })), download: 'apexib-revise-progress.json' });
+        document.body.append(a); a.click(); a.remove();
+      } }, 'Export progress'),
+      h('button', { type: 'button', onclick: () => file.click() }, 'Import progress'), file),
+    msg,
+    h('div', { class: 'tablewrap' }, h('table', {},
+      h('caption', { class: 'sr' }, 'Mastery by syllabus code'),
+      h('thead', {}, h('tr', {}, h('th', { scope: 'col' }, 'Code'), h('th', { scope: 'col' }, 'Quiz'), h('th', { scope: 'col' }, 'Cards'), h('th', { scope: 'col' }, 'Mastery'))),
+      tbody)),
+    h('p', { class: 'muted' }, 'Mastery averages quiz accuracy with flashcard box progress (box / 5). Progress is stored only in this browser.'));
+}
+
+function refresh() {
+  lsSet('filters', f);
+  $('f-count').textContent = `${items().length} items`;
+  quiz.restart(); cards.reset(); examples.render();
+}
+topicSel.addEventListener('change', () => { f.topic = topicSel.value; refresh(); });
+$('f-mode').addEventListener('change', (e) => { f.mode = e.target.value; refresh(); });
+$('f-level').addEventListener('change', (e) => { f.level = e.target.value; refresh(); });
+
+// tabs
+const tabs = ['quiz', 'cards', 'examples', 'progress'];
+function show(name) {
+  for (const t of tabs) {
+    $('t-' + t).setAttribute('aria-selected', String(t === name));
+    $('t-' + t).tabIndex = t === name ? 0 : -1;
+    $('p-' + t).hidden = t !== name;
+  }
+  cards.active = name === 'cards';
+  if (name === 'progress') renderProgress();
+  if (name === 'cards') cards.reset();
+}
+tabs.forEach((t, i) => {
+  $('t-' + t).addEventListener('click', () => show(t));
+  $('t-' + t).addEventListener('keydown', (e) => {
+    const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; show(n); $('t-' + n).focus(); e.preventDefault(); }
+  });
+});
+
+// flashcard keys: space = flip, 1 = again, 2 = good
+document.addEventListener('keydown', (e) => {
+  if (!cards.active || e.ctrlKey || e.metaKey || e.altKey) return;
+  const tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  if (e.key === ' ') { if (tag === 'BUTTON') return; e.preventDefault(); cards.flip(); }
+  else if (e.key === '1') cards.rate('again');
+  else if (e.key === '2') cards.rate('good');
+});
+
+show('quiz');
+$('f-count').textContent = `${items().length} items`;
+</script>
+</body>
+</html>

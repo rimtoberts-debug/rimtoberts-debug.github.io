@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revise tests | ApexIB Labs</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap"><a class="brand" href="../labs.html">&larr; ApexIB <span>Labs</span></a></div></header>
+<main class="wrap">
+<h1>Revise unit tests</h1>
+<p id="summary" role="status">Running...</p>
+<ul id="out"></ul>
+</main>
+<footer class="wrap site-footer">ApexIB is independent and not affiliated with or endorsed by the International Baccalaureate Organization. &middot; <a href="../privacy.html">Privacy</a> &middot; <a href="../index.html">Home</a></footer>
+<script type="module">
+import { DAY, INTERVALS, newCard, isDue, review, dueCards, boxCounts } from './cards.js';
+import { validateItem, filterItems, checkAnswer, recordScore, importAll, practiceFor } from './quiz.js';
+
+const results = [];
+const test = (name, fn) => { try { fn(); results.push([name, null]); } catch (e) { results.push([name, e.message || String(e)]); } };
+const eq = (a, b, m) => { if (JSON.stringify(a) !== JSON.stringify(b)) throw new Error(`${m || 'expected'}: got ${JSON.stringify(a)}, want ${JSON.stringify(b)}`); };
+const T0 = 1700000000000;
+
+// Leitner scheduling
+test('new card starts in box 1 and is due', () => { eq(newCard(T0), { box: 1, due: T0 }); eq(isDue(newCard(T0), T0), true); });
+test('unseen (undefined) card is due', () => eq(isDue(undefined, T0), true));
+test('good promotes box 1 -> 2 with 2 day interval', () => eq(review({ box: 1, due: T0 }, 'good', T0), { box: 2, due: T0 + 2 * DAY }));
+test('good walks 1..5 with intervals 1,2,4,8,16 days', () => {
+  let c = undefined, boxes = [];
+  for (let i = 0; i < 5; i++) { c = review(c, 'good', T0); boxes.push(c.box); }
+  eq(boxes, [2, 3, 4, 5, 5]);
+  eq(INTERVALS, [1, 2, 4, 8, 16]);
+  eq(c.due, T0 + 16 * DAY);
+});
+test('good on box 5 stays in box 5', () => eq(review({ box: 5, due: 0 }, 'good', T0).box, 5));
+test('again resets any box to 1 due in 1 day', () => eq(review({ box: 4, due: 0 }, 'again', T0), { box: 1, due: T0 + DAY }));
+test('card not due before its date, due at and after', () => {
+  const c = { box: 3, due: T0 + 4 * DAY };
+  eq(isDue(c, T0 + 4 * DAY - 1), false); eq(isDue(c, T0 + 4 * DAY), true); eq(isDue(c, T0 + 5 * DAY), true);
+});
+test('dueCards returns only due flashcards, lowest box first', () => {
+  const items = [{ id: 'a', type: 'flashcard' }, { id: 'b', type: 'flashcard' }, { id: 'c', type: 'flashcard' }, { id: 'd', type: 'mcq' }];
+  const cards = { a: { box: 3, due: T0 - 1 }, b: { box: 2, due: T0 + DAY } };
+  eq(dueCards(items, cards, T0).map((i) => i.id), ['c', 'a']);
+});
+test('boxCounts', () => eq(boxCounts([{ id: 'a', type: 'flashcard' }, { id: 'b', type: 'flashcard' }], { a: { box: 2, due: 0 } }), [1, 0, 1, 0, 0, 0]));
+
+// Schema, filters, scoring
+const good = { id: 'A1.2.1-001', code: 'A1.2.1', hl_only: false, type: 'mcq', level: 'both', prompt: 'Q', options: ['a', 'b'], answer: 1 };
+test('valid item passes', () => eq(validateItem(good), []));
+test('bad item reported, not thrown', () => { eq(validateItem(null).length > 0, true); eq(validateItem({ ...good, answer: 5 }).length > 0, true); eq(validateItem({ ...good, type: 'x' }).length > 0, true); });
+test('IB item mentioning merge sort is rejected; GCSE allowed', () => {
+  eq(validateItem({ ...good, prompt: 'Describe merge sort' }).length > 0, true);
+  eq(validateItem({ ...good, level: 'GCSE', prompt: 'Describe merge sort' }), []);
+});
+const syl = { topics: [{ code: 'B4', title: 't', hl_only: true, subtopics: [{ code: 'B4.1', title: 's', hl_only: true }] }, { code: 'A1', title: 'x', hl_only: false, subtopics: [{ code: 'A1.4', title: 'y', hl_only: true }, { code: 'A1.2', title: 'z', hl_only: false }] }] };
+const pool = [
+  good,
+  { ...good, id: 'B4.1.1-001', code: 'B4.1.1', hl_only: true },
+  { ...good, id: 'B4.1.2-001', code: 'B4.1.2', hl_only: false }, // HL via syllabus even though flag is false
+  { ...good, id: 'A1.4.1-001', code: 'A1.4.1', hl_only: false },
+  { ...good, id: 'A1.2.1-009', code: 'A1.2.1', level: 'GCSE' },
+];
+test('SL filter never returns hl_only items (flag or syllabus)', () => eq(filterItems(pool, { topic: '', mode: 'SL', level: 'IB' }, syl).map((i) => i.id), ['A1.2.1-001']));
+test('HL filter returns HL items too', () => eq(filterItems(pool, { topic: '', mode: 'HL', level: 'IB' }, syl).length, 4));
+test('GCSE filter excludes IB-only, includes both', () => eq(filterItems(pool, { topic: 'A1.2', mode: 'HL', level: 'GCSE' }, syl).map((i) => i.id), ['A1.2.1-001', 'A1.2.1-009']));
+test('topic filter is prefix-on-segment (A1.2 does not match A1.20)', () => eq(filterItems([{ ...good, code: 'A1.20' }], { topic: 'A1.2', mode: 'HL', level: 'IB' }, syl).length, 0));
+test('short answer is case-insensitive and honours accept', () => {
+  const s = { type: 'short', answer: 'Unicode', accept: ['utf-8'] };
+  eq(checkAnswer(s, '  UNICODE '), true); eq(checkAnswer(s, 'UTF-8'), true); eq(checkAnswer(s, 'ascii'), false); eq(checkAnswer(s, ''), false);
+});
+test('mcq answer by index', () => { eq(checkAnswer(good, 1), true); eq(checkAnswer(good, 0), false); });
+test('recordScore accumulates per code without mutating', () => {
+  const a = {}; const b = recordScore(a, 'A1', true); const c = recordScore(b, 'A1', false);
+  eq(a, {}); eq(c, { A1: { right: 1, total: 2 } });
+});
+test('practiceFor picks same-code quiz item other than the example', () => {
+  const w = { id: 'X1.1-001', code: 'A1.2.1', type: 'worked' };
+  eq(practiceFor(w, pool, pool).id, 'A1.2.1-001');
+  eq(practiceFor({ ...w, code: 'Z9' }, pool, pool), null);
+});
+test('importAll rejects garbage without throwing', () => { eq(importAll('{').ok, false); eq(importAll('{"app":"x"}').ok, false); eq(importAll('{"app":"apexib.revise","data":{"scores":{"A1":{"right":"x"}}}}').ok, false); });
+
+const failed = results.filter((r) => r[1]);
+document.getElementById('summary').textContent = `${results.length - failed.length} passed, ${failed.length} failed`;
+document.title = failed.length ? 'FAIL' : 'PASS';
+document.body.dataset.failed = String(failed.length);
+const ul = document.getElementById('out');
+for (const [n, err] of results) { const li = document.createElement('li'); li.textContent = (err ? 'FAIL: ' : 'ok: ') + n + (err ? ' - ' + err : ''); if (err) li.className = 'bad'; ul.append(li); }
+</script>
+</body>
+</html>
