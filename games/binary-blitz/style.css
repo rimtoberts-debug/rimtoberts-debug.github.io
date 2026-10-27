@@ -1,0 +1,32 @@
+@import url("../../assets/apexib.css");
+.topbar .wrap{justify-content:space-between}
+main{padding-top:16px}
+fieldset{border:1px solid var(--border);border-radius:8px;display:flex;flex-wrap:wrap;gap:12px;margin:0 0 12px}
+fieldset label{display:flex;gap:6px;align-items:center}
+small{color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.hud{display:flex;justify-content:space-between;gap:8px;font-size:15px}
+.mult{font-weight:700;color:var(--accent-2)}
+.bar{height:10px;background:var(--border);border-radius:99px;overflow:hidden;margin:8px 0}
+#barfill{height:100%;width:100%;background:var(--accent);transform-origin:left;transition:transform .1s linear}
+#barfill.low{background:var(--bad)}
+.q{text-align:center;padding:8px 0}
+.meta{color:var(--muted);font-size:14px}
+.shown{font:700 clamp(22px,7vw,40px)/1.2 var(--mono);word-break:break-all;margin:8px 0}
+.answer{font:700 clamp(22px,7vw,32px)/1.2 var(--mono);min-height:52px;border:2px solid var(--border);border-radius:8px;padding:8px;word-break:break-all}
+.answer:empty::after{content:"…";color:var(--muted)}
+.fb{min-height:28px;font-weight:700;margin-top:6px}
+.fb.ok{color:var(--ok)}.fb.bad{color:var(--bad)}
+.pad{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.pad button{padding:12px 0;font:700 18px var(--mono);min-height:44px}
+.pad .wide{grid-column:span 3}
+.hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+#missed li{margin-bottom:10px}
+#missed code{word-break:break-word}
+.pop{animation:pop .35s ease-out}
+.shake{animation:shake .35s}
+.streakfx{animation:glow .6s ease-out}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.12);border-color:var(--ok)}100%{transform:scale(1)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes glow{0%{box-shadow:0 0 0 0 var(--accent-2)}100%{box-shadow:0 0 0 18px transparent}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

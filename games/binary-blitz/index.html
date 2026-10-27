@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Binary Blitz · ApexIB Labs</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a href="../../labs.html">← ApexIB Labs</a>
+  <strong class="brand">Binary <span>Blitz</span></strong>
+</div></header>
+
+<main class="wrap">
+  <section id="setup" class="card">
+    <h1>Binary Blitz</h1>
+    <p>60 seconds. Convert as many numbers as you can between decimal, binary and hex. <span class="tag">A1.2.1</span> Also fits GCSE.</p>
+    <fieldset>
+      <legend>Difficulty</legend>
+      <label><input type="radio" name="bits" value="4"> 4-bit <small id="best4"></small></label>
+      <label><input type="radio" name="bits" value="8" checked> 8-bit <small id="best8"></small></label>
+      <label><input type="radio" name="bits" value="16"> 16-bit <small id="best16"></small></label>
+    </fieldset>
+    <p><button id="start" class="primary">Start</button></p>
+    <p class="row">
+      <button id="export">Export progress</button>
+      <label class="btn">Import progress <input id="import" type="file" accept="application/json" hidden></label>
+      <span id="msg" role="status"></span>
+    </p>
+  </section>
+
+  <section id="play" class="card" hidden>
+    <div class="hud">
+      <span>Score <b id="score">0</b></span>
+      <span id="mult" class="mult">x1</span>
+      <span>Streak <b id="streak">0</b></span>
+      <span><b id="secs">60</b>s</span>
+    </div>
+    <div class="bar" aria-hidden="true"><div id="barfill"></div></div>
+    <div class="q">
+      <div class="meta"><span id="dir"></span> <span class="tag">A1.2.1</span></div>
+      <div id="shown" class="shown" aria-live="polite"></div>
+      <div id="answer" class="answer" aria-label="Your answer"></div>
+      <div id="fb" class="fb" role="status"></div>
+    </div>
+    <div id="pad" class="pad"></div>
+    <p class="hint">Keyboard: type 0-9 / A-F, Backspace, Enter.</p>
+  </section>
+
+  <section id="end" class="card" hidden>
+    <h2>Time up!</h2>
+    <p>Score <b id="fscore"></b> · <span id="fstat"></span> · <span id="fbest"></span></p>
+    <h3>Missed questions</h3>
+    <ol id="missed"></ol>
+    <p><button id="again" class="primary">Play again</button></p>
+  </section>
+</main>
+
+<footer class="wrap site-footer">ApexIB is independent and not affiliated with or endorsed by the International Baccalaureate Organization. · <a href="../../privacy.html">Privacy</a></footer>
+<script type="module" src="game.js"></script>
+</body>
+</html>
