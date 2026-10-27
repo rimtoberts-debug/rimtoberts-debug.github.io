@@ -1,0 +1,5 @@
+[
+  {"id":"B2.4.2-01","code":"B2.4.2","hl_only":false,"title":"Linear search","file":"B2.4.2-01.json"},
+  {"id":"B2.4.3-01","code":"B2.4.3","hl_only":false,"title":"Bubble sort (no built-ins)","file":"B2.4.3-01.json"},
+  {"id":"B4.1-01","code":"B4.1","hl_only":true,"title":"Stack push and pop","file":"B4.1-01.json"}
+]

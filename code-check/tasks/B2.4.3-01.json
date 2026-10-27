@@ -1,0 +1,19 @@
+{
+  "id": "B2.4.3-01",
+  "code": "B2.4.3",
+  "hl_only": false,
+  "title": "Bubble sort (no built-ins)",
+  "brief": "Write bubble_sort(a) that sorts the list of integers into ascending order using a bubble sort and returns the sorted list. You may not use built-in sorting or min/max helpers.",
+  "starter": "def bubble_sort(a):\n    ...",
+  "function": "bubble_sort",
+  "tests": [
+    {"args": [[3, 1, 2]], "expected": [1, 2, 3], "marks": 1},
+    {"args": [[5, 4, 3, 2, 1]], "expected": [1, 2, 3, 4, 5], "marks": 1},
+    {"args": [[1, 2, 3]], "expected": [1, 2, 3], "marks": 1},
+    {"args": [[2, 2, 1]], "expected": [1, 2, 2], "marks": 1},
+    {"args": [[]], "expected": [], "marks": 1}
+  ],
+  "banned": ["sorted", "sort", "min", "max"],
+  "markpoints": ["Uses nested loops", "Swaps adjacent elements", "Returns the list"],
+  "java_reference": "public static void bubbleSort(int[] a) {\n    for (int i = 0; i < a.length - 1; i++) {\n        for (int j = 0; j < a.length - 1 - i; j++) {\n            if (a[j] > a[j + 1]) {\n                int tmp = a[j];\n                a[j] = a[j + 1];\n                a[j + 1] = tmp;\n            }\n        }\n    }\n}"
+}

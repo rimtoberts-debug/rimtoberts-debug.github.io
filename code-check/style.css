@@ -1,0 +1,20 @@
+@import url("../assets/apexib.css");
+main{padding-top:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+.note{color:var(--muted);font-size:14px;margin:8px 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+input.sr:focus-visible+*,label.btn:focus-within{outline:3px solid var(--accent)}
+.card{margin:16px 0}
+.banner{border:1px solid var(--warn);color:var(--warn);border-radius:8px;padding:8px 12px;margin:8px 0;font-weight:600}
+.tabs{display:flex;gap:4px;margin:12px 0 0;border-bottom:1px solid var(--border)}
+.tabs button{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:0}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.editor{display:flex;border:1px solid var(--border);border-radius:8px;background:var(--surface);overflow:hidden;margin-top:12px}
+.gutter{padding:8px 8px 8px 12px;text-align:right;color:var(--muted);background:var(--bg);border-right:1px solid var(--border);font:14px/1.5 var(--mono);white-space:pre;overflow:hidden;user-select:none;min-width:3em}
+textarea.code{flex:1;min-width:0;border:0;border-radius:0;height:300px;resize:vertical;font:14px/1.5 var(--mono);tab-size:4;white-space:pre;overflow:auto;padding:8px}
+.out{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;min-height:2.5em;white-space:pre-wrap;overflow:auto;font-size:14px}
+table.res{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+table.res th,table.res td{border:1px solid var(--border);padding:4px 8px;text-align:left;vertical-align:top;word-break:break-word}
+.pass{color:var(--ok);font-weight:700}.fail{color:var(--bad);font-weight:700}
+.points{list-style:none;padding:0}.points li{margin:6px 0}
+@media (max-width:480px){.tabs button{padding:8px 10px}}

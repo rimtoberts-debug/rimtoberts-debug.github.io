@@ -1,0 +1,18 @@
+{
+  "id": "B4.1-01",
+  "code": "B4.1",
+  "hl_only": true,
+  "title": "Stack push and pop",
+  "brief": "Implement a stack using a list. Write run_stack(ops) where ops is a list of operations: [\"push\", x] pushes x, [\"pop\"] removes the top item. Return a list of the values popped, in order; a pop on an empty stack contributes None instead of crashing.",
+  "starter": "def run_stack(ops):\n    ...",
+  "function": "run_stack",
+  "tests": [
+    {"args": [[["push", 1], ["push", 2], ["pop"], ["pop"]]], "expected": [2, 1], "marks": 1},
+    {"args": [[["pop"]]], "expected": [null], "marks": 1},
+    {"args": [[["push", 5], ["pop"], ["pop"]]], "expected": [5, null], "marks": 1},
+    {"args": [[]], "expected": [], "marks": 1}
+  ],
+  "banned": [],
+  "markpoints": ["Push adds to the top of the stack", "Pop removes and returns the most recently pushed item (LIFO)", "Handles popping an empty stack without an error"],
+  "java_reference": "import java.util.ArrayList;\n\npublic class IntStack {\n    private final ArrayList<Integer> items = new ArrayList<>();\n\n    public void push(int x) { items.add(x); }\n\n    public Integer pop() {\n        if (items.isEmpty()) return null;\n        return items.remove(items.size() - 1);\n    }\n}"
+}
