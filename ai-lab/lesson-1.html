@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1: What is AI? | ApexIB AI Lab</title>
+<link rel="stylesheet" href="style.css"><script src="common.js"></script></head><body>
+<nav class="nav"><div class="nav-inner"><a href="../labs.html" class="brand">Apex<b>IB</b> Labs</a><a class="l" href="index.html">Understanding AI</a><a class="l" href="ib-a4-1.html">IB A4.1 map</a></div></nav>
+<div class="wrap">
+<div class="crumb"><a href="index.html">Understanding AI</a><span aria-hidden="true">›</span><span style="color:var(--text)">Lesson 1 - What is AI?</span></div>
+<main>
+<div><span class="badge"><span aria-hidden="true">🤖</span> Lesson 1 of 8</span>
+<h1 class="title">What is AI?<br>Rules vs Learning</h1><p class="summary">Compare programs that follow hand-written rules with programs that work out their own rules from examples.</p>
+<div class="meta"><span><span aria-hidden="true">🎓</span>GCSE &amp; A-Level</span><span><span aria-hidden="true">✓</span>Free</span><span><span aria-hidden="true">🧩</span>simulations + quiz</span></div></div>
+<div class="sec"><div class="label">Hook</div><div class="hook"><p>A thermostat that switches the heating on below 18°C is following a rule someone typed in. A photo app that recognises your dog in thousands of pictures is not: nobody wrote down what a dog looks like.</p><p>Both are 'smart' in everyday language, yet they work in opposite ways.</p><div class="think"><strong>Think:</strong> Which of the two would break more easily if it met something unexpected, and why?</div></div></div>
+<div class="sec"><div class="label">Explanation</div><h2 class="h">Two ways to build a clever program</h2><p class="body">In <strong>rule-based programming</strong>, a person works out the logic and writes it as instructions. The same input always gives the same output, and the program only copes with situations its author thought of.</p><p class="body">In <strong>machine learning</strong>, we supply examples and the desired answers. The computer searches for a pattern that links them, producing its own rules, usually as a set of numbers called a <strong>model</strong>.</p><p class="body"><strong>Artificial intelligence</strong> is the broad name for systems that perform tasks we would normally link with human thinking. Machine learning is one (very successful) way of getting there.</p></div><div class="sec"><div class="label">Explanation</div><h2 class="h">The learning loop</h2><p class="body">Training follows a repeating cycle: <strong>predict</strong>, <strong>compare</strong> with the right answer, then <strong>adjust</strong>. After many cycles the predictions get steadily closer to the answers.</p><p class="body">A simple spam filter shows it well. It reads emails labelled 'spam' or 'not spam', notices that words like 'prize' appear far more in spam, and weights those words more heavily. No one typed a list of banned words.</p></div><div class="sec"><div class="label">Explanation</div><h2 class="h">Why not just write more rules?</h2><p class="body">Rule lists look attractive: you can read every line and explain every decision. The trouble is <strong>coverage</strong>. Spammers change spelling, languages and tricks faster than a person can update a list, and every new rule can clash with an old one.</p><p class="body">A learned model generalises. It does not need an exact match: if lots of spam-like words appear together, the score rises. When behaviour changes you retrain with fresh examples instead of rewriting the logic.</p></div><div class="sec"><div class="label">Explanation</div><h2 class="h">Three kinds of machine learning</h2><p class="body"><strong>Supervised learning</strong> uses labelled examples (email + 'spam'). It is used for classification and for predicting numbers.</p><p class="body"><strong>Unsupervised learning</strong> gets no labels and looks for structure itself, for instance grouping customers with similar habits into clusters.</p><p class="body"><strong>Reinforcement learning</strong> learns by trial and error: an agent takes actions, receives rewards or penalties, and gradually favours actions that earn more reward. Game-playing and robotics systems often use it.</p></div><div class="sec"><div class="label">Explanation</div><h2 class="h">When rules still win</h2><p class="body">Learning is not always the right tool. If the logic is fully known and must be exact, auditable and cheap to run, ordinary code is better. Learning shines when the pattern is too complex or too fuzzy to write down, such as recognising speech, faces or handwriting.</p></div><div class="sec"><div class="label">Explanation</div><h2 class="h">Reinforcement learning vocabulary</h2><p class="body">An <strong>agent</strong> acts in an <strong>environment</strong>. In each <strong>state</strong> it chooses an <strong>action</strong> and receives a <strong>reward</strong> (positive or negative). Its aim is to maximise total reward over time, so it must balance <strong>exploration</strong> (trying new things) with <strong>exploitation</strong> (using what already works). No labelled answers are ever supplied, which separates this from supervised learning.</p></div>
+<div class="sec"><div class="label">Simulation</div><h2 class="h">Train a spam filter</h2><p class="body">Watch a model learn from labelled emails. Each time it gets one wrong, it nudges the weight of every word in that email. Then type your own message and see how it scores.</p><div class="wid"><div class="btnrow"><button class="btn" id="w1-step">Train on next email</button><button class="btn ghost" id="w1-all">Train 5 full rounds</button><button class="btn ghost" id="w1-reset">Reset</button></div>
+<div class="stat" id="w1-log">Press the button to show the model its first email.</div>
+<div id="w1-queue"></div>
+<h3 style="margin-top:14px">What the model has learned (word weights)</h3><div id="w1-weights"></div>
+<h3 style="margin-top:14px">Test it</h3><input class="txt" id="w1-test" value="free prize inside">
+<div class="stat" id="w1-verdict"></div>
+<p class="note2">Positive weights push towards spam, negative towards not spam. This is a simplified perceptron-style learner.</p></div><script>window.addEventListener("DOMContentLoaded",function(){
+var data=[["win a free prize now",1],["meeting notes for tomorrow",0],["free money click now",1],["homework due tomorrow",0],["claim your prize today",1],["lunch with the team today",0],["free tickets win now",1],["notes from the class today",0]];
+var wt={},idx=0,seen=0,status=[];
+function score(t){return t.toLowerCase().split(/\s+/).filter(Boolean).reduce(function(s,w){return s+(wt[w]||0)},0)}
+function render(){
+  $("w1-queue").innerHTML=data.map(function(d,i){var s=status[i];return '<div class="bar"><span class="n" style="min-width:60px;color:'+(d[1]?'#f59e0b':'#10b981')+'">'+(d[1]?'spam':'ham')+'</span><span style="flex:1">'+d[0]+'</span><span>'+(s===undefined?'':(s?'✔':'✘ adjusted'))+'</span></div>'}).join("");
+  var ks=Object.keys(wt).filter(function(k){return wt[k]!==0}).sort(function(a,b){return Math.abs(wt[b])-Math.abs(wt[a])});
+  $("w1-weights").innerHTML=ks.length?ks.map(function(k){var v=wt[k];return '<div class="bar"><span class="n">'+k+'</span><i style="width:'+Math.min(200,Math.abs(v)*30)+'px;background:'+(v>0?'#f59e0b':'#10b981')+'"></i><span>'+v+'</span></div>'}).join(""):'<p class="note2">No weights yet.</p>';
+  verdict();
+}
+function verdict(){
+  var t=$("w1-test").value,s=score(t),parts=t.toLowerCase().split(/\s+/).filter(Boolean).map(function(w){return w+" ("+(wt[w]||0)+")"}).join(" + ");
+  $("w1-verdict").innerHTML='Score = '+(parts||'0')+' = <strong>'+s+'</strong> &rarr; '+(s>0?'<span style="color:#f59e0b">SPAM</span>':'<span style="color:#10b981">not spam</span>');
+}
+function step(){
+  var d=data[idx],s=score(d[0]),pred=s>0?1:0,ok=pred===d[1];
+  if(!ok)d[0].split(" ").forEach(function(w){wt[w]=(wt[w]||0)+(d[1]?1:-1)});
+  status[idx]=ok;
+  $("w1-log").innerHTML='Email: "<em>'+d[0]+'</em>"<br>Score '+s+' &rarr; predicted '+(pred?'spam':'not spam')+', actual '+(d[1]?'spam':'not spam')+'. '+(ok?'<span class="good">Correct, nothing changes.</span>':'<span class="badtxt">Wrong, so each word weight moves '+(d[1]?'up':'down')+' by 1.</span>');
+  idx=(idx+1)%data.length;if(idx===0)status=[];render();
+}
+$("w1-step").onclick=step;
+$("w1-all").onclick=function(){for(var i=0;i<data.length*5;i++){var d=data[idx],s=score(d[0]),p=s>0?1:0;if(p!==d[1])d[0].split(" ").forEach(function(w){wt[w]=(wt[w]||0)+(d[1]?1:-1)});idx=(idx+1)%data.length}status=[];$("w1-log").textContent="Trained for 5 full rounds over all 8 emails.";render()};
+$("w1-reset").onclick=function(){wt={};idx=0;status=[];$("w1-log").textContent="Reset. The model knows nothing.";render()};
+$("w1-test").oninput=verdict;window.__w1get=function(){return wt};render();
+});</script></div><div class="sec"><div class="label">Simulation</div><h2 class="h">Rules vs learning: the brittleness test</h2><p class="body">A hand-written rule list is precise but fragile. Try to fool each approach.</p><div class="wid"><input class="txt" id="w1b-in" value="Claim your fr3e pr1ze">
+<div class="btnrow"><button class="btn ghost" id="w1b-go">Re-test with current weights</button></div>
+<div class="stat" id="w1b-out"></div>
+<p class="note2">The rule list only catches the exact words 'free' and 'prize'. The scorer uses the word weights you trained above (train it first!) and a simple lookalike clean-up (3&rarr;e, 1&rarr;i, 0&rarr;o, @&rarr;a).</p></div><script>window.addEventListener("DOMContentLoaded",function(){
+function rules(t){t=t.toLowerCase();return t.indexOf("free")>=0||t.indexOf("prize")>=0}
+function norm(t){return t.toLowerCase().replace(/3/g,"e").replace(/1/g,"i").replace(/0/g,"o").replace(/@/g,"a")}
+function run(){var t=$("w1b-in").value;
+ var g=window.__w1get?window.__w1get():{};
+ var a=rules(t),n=norm(t),b=n.split(/\s+/).reduce(function(s,w){return s+(g[w]||0)},0);
+ $("w1b-out").innerHTML='Rule list says: <strong>'+(a?'SPAM':'not spam')+'</strong><br>Learned scorer on "'+n+'": score <strong>'+b+'</strong> &rarr; '+(b>0?'SPAM':'not spam (or untrained)');}
+$("w1b-in").oninput=run;$("w1b-go").onclick=run;
+run();
+});</script></div><div class="sec"><div class="label">Simulation</div><h2 class="h">Unsupervised learning: k-means clustering</h2><p class="body">No labels here. The algorithm groups points by repeating two steps: <strong>assign</strong> each point to its nearest centre, then <strong>move</strong> each centre to the mean of its points. Step through it and watch the groups settle.</p><div class="wid"><canvas id="w1c-c"></canvas>
+<div class="ctl"><label>Clusters (k)</label><input type="range" id="w1c-k" min="2" max="5" value="3"><output id="w1c-ko">3</output></div>
+<div class="btnrow"><button class="btn" id="w1c-st">Step (assign then move)</button><button class="btn ghost" id="w1c-run">Run to convergence</button><button class="btn ghost" id="w1c-rs">New random centres</button></div>
+<div class="stat" id="w1c-stat"></div></div><script>window.addEventListener("DOMContentLoaded",function(){
+var W_=480,H_=320,cc=cv("w1c-c",W_,H_),x=cc[1],r=mulberry32(21),P=[];
+[[2.2,2.4],[7,2.5],[4.5,7]].forEach(function(m){for(var i=0;i<30;i++)P.push({x:m[0]+gauss(r)*.9,y:m[1]+gauss(r)*.9,c:-1})});
+var col=["#f59e0b","#10b981","#3b82f6","#8b5cf6","#ef4444"],C=[],it=0,rr=mulberry32(4),phase=0;
+function sx(v){return v/9.5*W_}function sy(v){return H_-v/9.5*H_}
+function reset(){var k=+$("w1c-k").value;$("w1c-ko").textContent=k;C=[];for(var i=0;i<k;i++)C.push({x:1+rr()*7.5,y:1+rr()*7.5});P.forEach(function(p){p.c=-1});it=0;phase=0;draw()}
+function assign(){var ch=0;P.forEach(function(p){var b=0,bd=1e9;C.forEach(function(c,i){var d=(p.x-c.x)*(p.x-c.x)+(p.y-c.y)*(p.y-c.y);if(d<bd){bd=d;b=i}});if(p.c!==b)ch++;p.c=b});return ch}
+function move(){C.forEach(function(c,i){var s=0,sxv=0,syv=0;P.forEach(function(p){if(p.c===i){s++;sxv+=p.x;syv+=p.y}});if(s){c.x=sxv/s;c.y=syv/s}})}
+function inertia(){var s=0;P.forEach(function(p){if(p.c>=0){var c=C[p.c];s+=(p.x-c.x)*(p.x-c.x)+(p.y-c.y)*(p.y-c.y)}});return s}
+function draw(msg){x.clearRect(0,0,W_,H_);P.forEach(function(p){x.beginPath();x.arc(sx(p.x),sy(p.y),5,0,7);x.fillStyle=p.c<0?"#8892a4":col[p.c];x.fill()});
+ C.forEach(function(c,i){x.fillStyle=col[i];x.strokeStyle="#fff";x.lineWidth=2;x.fillRect(sx(c.x)-8,sy(c.y)-8,16,16);x.strokeRect(sx(c.x)-8,sy(c.y)-8,16,16)});
+ $("w1c-stat").innerHTML='Iteration '+it+'. '+(msg||'Squares are the cluster centres. Grey dots are not yet assigned.')+(P[0].c>=0?'<br>Total squared distance to centres: <strong>'+inertia().toFixed(1)+'</strong> (lower = tighter clusters)':'')}
+$("w1c-st").onclick=function(){if(phase===0){var ch=assign();phase=1;draw(ch+" points changed cluster. Next: move the centres.")}else{move();phase=0;it++;draw("Centres moved to the mean of their points.")}};
+$("w1c-run").onclick=function(){for(var i=0;i<30;i++){var ch=assign();move();it++;if(!ch)break}phase=0;draw("Converged: no point changed cluster.")};
+$("w1c-rs").onclick=reset;$("w1c-k").oninput=reset;reset();
+});</script></div><div class="sec"><div class="label">Simulation</div><h2 class="h">Reinforcement learning: a robot finds its way</h2><p class="body">The agent starts bottom-left. Reaching the green goal gives +10, falling in a red pit gives -10, and every step costs -0.1. It is never told the route: it learns by trial and error (Q-learning). Arrows show the best action it currently believes in each square.</p><div class="wid"><canvas id="w1d-c"></canvas>
+<div class="ctl"><label>Exploration (epsilon)</label><input type="range" id="w1d-e" min="0" max="100" value="20"><output id="w1d-eo">0.20</output></div>
+<div class="btnrow"><button class="btn" id="w1d-t1">Train 20 episodes</button><button class="btn" id="w1d-t2">Train 500 episodes</button><button class="btn ghost" id="w1d-rs">Reset knowledge</button></div>
+<div class="stat" id="w1d-stat"></div>
+<p class="note2">Epsilon = chance of trying a random move instead of the best known one. Too low and it may never discover a better route; too high and it keeps wasting moves.</p></div><script>window.addEventListener("DOMContentLoaded",function(){
+var W_=480,H_=320,cc=cv("w1d-c",W_,H_),x=cc[1],R=4,K=6,Q,ep=0,rec=[];
+var goal=[5,3],pits=[[3,3],[3,2],[1,1]],walls=[[2,2]];
+function isIn(l,r_,c){return l.some(function(p){return p[0]===c&&p[1]===r_})}
+var A=[[0,1],[0,-1],[-1,0],[1,0]];
+function rst(){Q={};for(var r_=0;r_<R;r_++)for(var c=0;c<K;c++)Q[r_+","+c]=[0,0,0,0];ep=0;rec=[]}
+function step(s,a){var nr=s[0]+A[a][1],nc=s[1]+A[a][0];if(nr<0||nr>=R||nc<0||nc>=K||isIn(walls,nr,nc))return{s:s,r:-0.1,d:false};
+ if(nc===goal[0]&&nr===goal[1])return{s:[nr,nc],r:10,d:true};if(isIn(pits,nr,nc))return{s:[nr,nc],r:-10,d:true};return{s:[nr,nc],r:-0.1,d:false}}
+function best(q){var b=0;for(var i=1;i<4;i++)if(q[i]>q[b])b=i;return b}
+function episode(eps){var s=[0,0],tot=0,n=0;while(n++<60){var q=Q[s[0]+","+s[1]],a=Math.random()<eps?Math.floor(Math.random()*4):best(q),o=step(s,a),nq=Q[o.s[0]+","+o.s[1]];
+ q[a]+=0.3*(o.r+(o.d?0:0.9*Math.max.apply(null,nq))-q[a]);tot+=o.r;s=o.s;if(o.d)break}ep++;rec.push(tot);if(rec.length>50)rec.shift()}
+function draw(){var cw=W_/K,ch=H_/R;x.clearRect(0,0,W_,H_);
+ for(var r_=0;r_<R;r_++)for(var c=0;c<K;c++){var X=c*cw,Y=(R-1-r_)*ch,q=Q[r_+","+c],m=Math.max.apply(null,q);
+  var fill="#141722";if(isIn(walls,r_,c))fill="#3a3f52";else if(c===goal[0]&&r_===goal[1])fill="rgba(16,185,129,.55)";else if(isIn(pits,r_,c))fill="rgba(239,68,68,.55)";else if(m>0)fill="rgba(16,185,129,"+Math.min(.35,m/12)+")";
+  x.fillStyle=fill;x.fillRect(X+1,Y+1,cw-2,ch-2);
+  if(!isIn(walls,r_,c)&&!(c===goal[0]&&r_===goal[1])&&!isIn(pits,r_,c)&&m!==0){var a=best(q),cx=X+cw/2,cy=Y+ch/2,dx=A[a][0]*18,dy=-A[a][1]*18;x.strokeStyle="#fff";x.lineWidth=2.5;x.beginPath();x.moveTo(cx-dx,cy-dy);x.lineTo(cx+dx,cy+dy);x.stroke();x.beginPath();x.arc(cx+dx,cy+dy,4,0,7);x.fillStyle="#fff";x.fill()}
+  x.fillStyle="#8892a4";x.font="11px Inter";x.fillText(isIn(walls,r_,c)?"wall":c===goal[0]&&r_===goal[1]?"GOAL +10":isIn(pits,r_,c)?"PIT -10":(r_===0&&c===0?"start":""),X+6,Y+16)}
+ var avg=rec.length?rec.reduce(function(a,b){return a+b},0)/rec.length:0;
+ $("w1d-stat").innerHTML='Episodes trained: <strong>'+ep+'</strong> &nbsp; Average reward over last '+rec.length+' episodes: <strong>'+avg.toFixed(2)+'</strong> (best possible is about 9.3)'}
+function tr(n){var e=$("w1d-e").value/100;for(var i=0;i<n;i++)episode(e);draw()}
+$("w1d-e").oninput=function(){$("w1d-eo").textContent=($("w1d-e").value/100).toFixed(2)};
+$("w1d-t1").onclick=function(){tr(20)};$("w1d-t2").onclick=function(){tr(500)};$("w1d-rs").onclick=function(){rst();draw()};
+rst();draw();
+});</script></div>
+<div class="sec"><div class="label">Activity</div><h2 class="h">Rules or learning?</h2><p class="body">Decide how each system most likely works.</p>
+<div class="card" data-activity><div class="act-row" data-a="Rules"><div class="act-q">A calculator adding two numbers</div><div class="opts"><button class="opt" data-v="Rules">Rules</button><button class="opt" data-v="Learning">Learning</button></div></div><div class="act-row" data-a="Learning"><div class="act-q">Software that sorts photos by who is in them</div><div class="opts"><button class="opt" data-v="Rules">Rules</button><button class="opt" data-v="Learning">Learning</button></div></div><div class="act-row" data-a="Rules"><div class="act-q">A traffic light running a fixed timer</div><div class="opts"><button class="opt" data-v="Rules">Rules</button><button class="opt" data-v="Learning">Learning</button></div></div><div class="act-row" data-a="Learning"><div class="act-q">A shop's 'you may also like' suggestions</div><div class="opts"><button class="opt" data-v="Rules">Rules</button><button class="opt" data-v="Learning">Learning</button></div></div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn" data-check>Check</button><button class="btn ghost" data-reset>Reset</button></div><div class="result"></div></div></div>
+<div class="sec"><div class="label">Reflect</div><h2 class="h">Questions worth thinking about</h2><div class="titem"><button class="tbtn">Why might a learning system be wrong even when it was trained for a long time?<span aria-hidden="true">▾</span></button><div class="tans">It can only reflect its training examples. If the examples are too few, unrepresentative, or contain mistakes, the patterns it finds will be flawed.</div></div><div class="titem"><button class="tbtn">Give one task where rules are better than learning.<span aria-hidden="true">▾</span></button><div class="tans">Anything that must be exact and explainable, such as calculating tax or running a payroll, where you can state the correct logic precisely.</div></div></div>
+<div class="sec"><div class="label">Summary</div><h2 class="h">What to remember</h2><ul class="key"><li>Rule-based systems follow instructions written by people.</li><li>Machine learning systems derive their own rules from example data.</li><li>Training repeats predict, compare, adjust.</li><li>AI is the broad field; machine learning is one approach within it.</li></ul></div>
+<div class="sec"><div class="label">Go further</div><h2 class="h">Explore further</h2><div class="links"><a href="#"><span aria-hidden="true">↗</span> Search: 'rule-based system vs machine learning'</a><a href="#"><span aria-hidden="true">↗</span> Try an online image-recognition demo</a></div></div>
+<div class="sec"><div class="label">Quiz</div><h2 class="h">Check your understanding</h2><div class="card" id="quiz"><div class="q"><p>1. What does a machine learning system need in order to learn?</p><div class="opts"><button class="opt" data-c="1">Examples of data</button><button class="opt" data-c="0">A list of every possible rule</button><button class="opt" data-c="0">A human checking each answer live</button></div></div><div class="q"><p>2. A fixed set of if/else statements is an example of...</p><div class="opts"><button class="opt" data-c="1">Rule-based programming</button><button class="opt" data-c="0">Training</button><button class="opt" data-c="0">A neural network</button></div></div><div class="q"><p>3. In the learning loop, what happens after the program makes a prediction?</p><div class="opts"><button class="opt" data-c="1">It is compared with the correct answer</button><button class="opt" data-c="0">The data is deleted</button><button class="opt" data-c="0">The program is rewritten by hand</button></div></div><div class="q"><p>4. Grouping customers by similar behaviour with no labels is...</p><div class="opts"><button class="opt" data-c="1">Unsupervised learning</button><button class="opt" data-c="0">Supervised learning</button><button class="opt" data-c="0">Rule-based programming</button></div></div><div class="q"><p>5. An agent that improves through rewards and penalties uses...</p><div class="opts"><button class="opt" data-c="1">Reinforcement learning</button><button class="opt" data-c="0">Clustering</button><button class="opt" data-c="0">A decision list</button></div></div><div class="q"><p>6. A key weakness of long hand-written rule lists is...</p><div class="opts"><button class="opt" data-c="1">They are hard to keep up to date with changing behaviour</button><button class="opt" data-c="0">They can never be explained</button><button class="opt" data-c="0">They need labelled data</button></div></div><button class="btn" id="submitQuiz">Submit</button><div class="result" id="quizRes"></div></div></div>
+<div class="sec"><div class="label">Exam practice</div><h2 class="h">Exam-style practice</h2><div class="exam"><p class="body"><strong>Explain one difference between a rule-based program and a machine learning model.</strong> <span class="marks">[2 marks]</span></p>
+<button class="btn ghost" id="msBtn">Show mark scheme</button><div class="ms" id="ms"><ul><li>A rule-based program follows instructions written by a programmer (1)</li><li>A machine learning model finds its own patterns/rules from training data (1)</li></ul></div></div>
+<div class="exam"><p class="body"><strong>A school wants software to recognise handwritten digits. Explain why machine learning is more suitable than writing rules.</strong> <span class="marks">[3 marks]</span></p>
+<button class="btn ghost" id="msBtn2">Show mark scheme</button><div class="ms" id="ms2"><ul><li>Handwriting varies hugely between people so rules would be too many/complex (1)</li><li>A model can learn patterns from many labelled examples (1)</li><li>It can generalise to new handwriting without every case being written by a programmer (1)</li></ul></div></div></div>
+<div class="pager"><span></span><a href="lesson-2.html">Lesson 2 <span aria-hidden="true">→</span></a></div>
+</main>
+<aside class="side"><div class="card"><h4>Understanding AI</h4><a href="lesson-1.html" class=cur>1. What is AI?</a><a href="lesson-2.html">2. Learning from data</a><a href="lesson-3.html">3. Classification</a><a href="lesson-4.html">4. Neural networks</a><a href="lesson-5.html">5. Bias and ethics</a><a href="lesson-6.html">6. Language models</a><a href="lesson-7.html">7. Data preprocessing (HL)</a><a href="lesson-8.html">8. Genetic algorithms and architectures (HL)</a></div></aside>
+</div>
+<footer>ApexIB is independent and not affiliated with or endorsed by the International Baccalaureate Organization. · <a href="../labs.html">ApexIB Labs</a> · <a href="../privacy.html">Privacy</a></footer>
+<script src="lesson.js"></script></body></html>

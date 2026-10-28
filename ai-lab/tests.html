@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>AI Lab tests</title>
+<style>body{font:14px system-ui,sans-serif;margin:16px}td,th{border:1px solid #ccc;padding:4px 8px}.ok{color:#15803d}.bad{color:#b91c1c}iframe{width:400px;height:300px;position:absolute;left:-9999px}</style></head>
+<body><h1>AI Lab smoke tests</h1><p id="sum">Running…</p>
+<table><thead><tr><th>Page</th><th>JS errors</th><th>Canvases</th><th>Drawn</th><th>Result</th></tr></thead><tbody id="rows"></tbody></table>
+<script>
+const pages=['index.html','ib-a4-1.html'].concat([1,2,3,4,5,6,7,8].map(n=>'lesson-'+n+'.html'));
+function drawn(c){try{const x=c.getContext('2d');if(!x||!c.width||!c.height)return false;const d=x.getImageData(0,0,c.width,c.height).data;const r=d[0],g=d[1],b=d[2],a=d[3];for(let i=4;i<d.length;i+=4*37){if(d[i]!==r||d[i+1]!==g||d[i+2]!==b||d[i+3]!==a)return true}return false}catch(e){return false}}
+function test(p){return new Promise(res=>{const f=document.createElement('iframe');const errs=[];f.src=p+'?test';
+ f.onload=()=>{const w=f.contentWindow;w.addEventListener('error',e=>errs.push(e.message));
+  // click every button once to exercise simulations
+  setTimeout(()=>{try{w.document.querySelectorAll('button').forEach(b=>{try{b.click()}catch(e){errs.push(String(e))}})}catch(e){errs.push(String(e))}
+   setTimeout(()=>{const cs=[...w.document.querySelectorAll('canvas')];const n=cs.filter(drawn).length;res({p,errs,c:cs.length,n});f.remove()},1500)},800)};
+ f.addEventListener('error',()=>res({p,errs:['load failed'],c:0,n:0}));
+ // capture errors thrown during initial script execution
+ const iv=setInterval(()=>{try{if(f.contentWindow&&!f.contentWindow.__hooked){f.contentWindow.__hooked=1;f.contentWindow.onerror=(m)=>{errs.push(m)}}}catch(e){}},5);setTimeout(()=>clearInterval(iv),3000);
+ document.body.appendChild(f)})}
+(async()=>{let pass=0;for(const p of pages){const r=await test(p);const ok=!r.errs.length&&r.n===r.c;if(ok)pass++;
+ document.getElementById('rows').insertAdjacentHTML('beforeend',`<tr><td>${r.p}</td><td>${r.errs.length?r.errs.join('; '):'0'}</td><td>${r.c}</td><td>${r.n}</td><td class="${ok?'ok':'bad'}">${ok?'PASS':'FAIL'}</td></tr>`)}
+ document.getElementById('sum').textContent=`${pass}/${pages.length} pages passed`;document.title='DONE '+pass+'/'+pages.length})();
+</script></body></html>
