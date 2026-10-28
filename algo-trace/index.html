@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trace Tables – ApexIB Labs</title>
+<meta name="description" content="Step through IB Computer Science searching, sorting and recursion algorithms in Python and Java, then practise exam-style trace tables.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../assets/apexib.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="../index.html">Apex<span>IB</span></a>
+  <a class="back" href="../labs.html">← ApexIB Labs</a>
+</div></header>
+
+<main class="wrap trace-main">
+  <h1>Trace Tables</h1>
+  <p class="lead">Watch an algorithm run line by line, then fill in the trace table yourself.</p>
+
+  <section class="card panel" aria-labelledby="h-setup">
+    <h2 id="h-setup">Choose an algorithm</h2>
+    <div class="row">
+      <label class="field">Algorithm <select id="alg"></select></label>
+      <label><input type="checkbox" id="hl"> HL topics (recursion, B2.4.5)</label>
+      <label><input type="checkbox" id="gcse"> GCSE mode (adds insertion &amp; merge sort)</label>
+      <span class="tag" id="code-tag"></span>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <label class="field" style="flex:1 1 220px">Numbers (comma separated)<input id="nums" inputmode="numeric" autocomplete="off" placeholder="e.g. 7, 3, 9, 1, 5"></label>
+      <label class="field" id="target-wrap" style="width:110px">Target<input id="target" inputmode="numeric" autocomplete="off"></label>
+      <label class="field hidden" id="n-wrap" style="width:110px">n (0–8)<input id="nval" inputmode="numeric" autocomplete="off"></label>
+      <button id="use" class="primary">Use these</button>
+      <button id="random">Random</button>
+    </div>
+    <p class="err" id="err" role="alert"></p>
+    <p class="note" id="sorted-note"></p>
+  </section>
+
+  <div class="row panel" role="group" aria-label="Mode">
+    <div class="seg">
+      <button id="m-watch" aria-pressed="true">Watch</button>
+      <button id="m-trace" aria-pressed="false">Trace it yourself</button>
+    </div>
+  </div>
+
+  <section class="card panel" id="watch" aria-labelledby="h-run">
+    <h2 id="h-run">Step through</h2>
+    <div class="bars" id="bars" role="img" aria-label="Array bars"></div>
+    <p class="msg" id="msg" aria-live="polite"></p>
+    <div class="ctrl" role="group" aria-label="Playback controls">
+      <button id="first" aria-label="Restart">⏮</button>
+      <button id="back">◀ Back</button>
+      <button id="step">Step ▶</button>
+      <button id="play" class="primary" aria-pressed="false">Play</button>
+      <label class="field">Speed <input type="range" id="speed" min="1" max="5" value="3"></label>
+      <span class="note" id="pos"></span>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div id="vars-wrap" style="margin-top:12px"><table class="vars" id="vars"></table></div>
+    <div id="stack-wrap" class="hidden" style="margin-top:12px"><h3>Call stack</h3><div class="stack" id="stack"></div></div>
+  </section>
+
+  <section class="card panel" aria-labelledby="h-code">
+    <h2 id="h-code">Code</h2>
+    <div class="seg langtabs" role="group" aria-label="Language">
+      <button id="l-py" aria-pressed="true">Python</button>
+      <button id="l-java" aria-pressed="false">Java</button>
+    </div>
+    <div class="codes">
+      <div class="pane" id="pane-py"><h3>Python</h3><pre id="code-py" aria-label="Python code"></pre></div>
+      <div class="pane off" id="pane-java"><h3>Java</h3><pre id="code-java" aria-label="Java code"></pre></div>
+    </div>
+  </section>
+
+  <section class="card panel hidden" id="trace" aria-labelledby="h-trace">
+    <h2 id="h-trace">Trace it yourself</h2>
+    <p class="note">One row per marked step, in order. Type each variable's value as it is <em>after</em> that step (for searches, the values at the comparison). Arrays like <code>3,1,2</code>. Leave a cell empty if the variable has no value yet. Output goes in the last column on the final row.</p>
+    <div class="trace-wrap"><table class="trace" id="trace-table"></table></div>
+    <div class="ctrl" style="margin-top:10px">
+      <button id="addrow">Add row</button>
+      <button id="check" class="primary">Check</button>
+      <button id="reveal">Show answers</button>
+      <button id="clear">Clear</button>
+    </div>
+    <p class="result" id="result" aria-live="polite"></p>
+  </section>
+
+  <section class="card panel flow hidden" id="flow-panel" aria-labelledby="h-flow">
+    <h2 id="h-flow">Flowchart (B1.1.4 symbols)</h2>
+    <svg id="flow" viewBox="0 0 380 570" role="img" aria-label="Flowchart of linear search"></svg>
+    <p class="note">Terminator = Start/End · Rectangle = Process · Diamond = Decision · Parallelogram = Input/Output · Arrows = Flowlines · Circle = Connector.</p>
+  </section>
+
+  <section class="card panel" aria-labelledby="h-big">
+    <h2 id="h-big">Big O</h2>
+    <table class="bigo" id="bigo"></table>
+    <p class="note" id="bigo-note"></p>
+  </section>
+
+  <section class="card panel" aria-labelledby="h-prog">
+    <h2 id="h-prog">Your progress</h2>
+    <p class="note" id="prog">No attempts yet.</p>
+    <div class="row">
+      <button id="export">Export progress (JSON)</button>
+      <label class="btn">Import progress <input type="file" id="import" accept="application/json,.json" class="sr"></label>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap site-footer">ApexIB is independent and not affiliated with or endorsed by the International Baccalaureate Organization. · <a href="../privacy.html">Privacy</a> · <a href="../index.html">Home</a></footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>
